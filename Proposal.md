@@ -16,7 +16,7 @@ The technology stack will be flexible, however the initial plan will be to use P
 | Liam Haining | lhain08 | hainil@rpi.edu |
 | Brian Lin | BianoBonzo | linb4@rpi.edu |
 | Dylan Kullas | Kullas233 | Kullad@rpi.edu |
-| Nick Lennox | nick-lennox:| lennon@rpi.edu |
+| Nick Lennox | nick-lennox | lennon@rpi.edu |
 |Jonathon Koseoglu| jonnyk17| koseoj@rpi.edu|
 
 ## Milestones
