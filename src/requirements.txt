@@ -1,0 +1,5 @@
+-r api/python_fitbit/requirements/dev.txt
+
+dash==2.3.0
+fitbit==0.3.1
+cherrypy==18.6.1
