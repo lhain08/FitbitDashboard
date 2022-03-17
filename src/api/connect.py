@@ -11,7 +11,6 @@ def read_id_and_secret():
         print("ERROR: credentials.txt does not exist or has invalid format")
         print("\tShould contain CLIENT_ID and CLIENT_SECRET on first and second lines respectively")
         raise("Bad File")
-    print("GOT CLIENT ID AND SECRET", CLIENT_ID, CLIENT_SECRET)
     return CLIENT_ID, CLIENT_SECRET
 
 def get_client():
