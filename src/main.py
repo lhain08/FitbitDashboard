@@ -3,7 +3,7 @@ from dash import Dash, html
 import dash_bootstrap_components as dbc
 
 from data_manager import DataManager
-from tabbing import DashboardTabs
+from dashboard.tabbing import DashboardTabs
 
 dm = DataManager()
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
