@@ -28,7 +28,7 @@ class DashboardTabs():
                 tab_count = len(self.tabs.children) - 1
                 tab = dbc.Tab(label='Dashboard %d' % (tab_count + 1), tab_id=tab_id)
                 self.tabs.children.insert( tab_count, tab)
-                self.dashboards[tab_id] = Dashboard(tab, "dashboard-%d" % (self.tab_index))
+                self.dashboards[tab_id] = Dashboard(app, tab, "dashboard-%d" % (self.tab_index))
 
                 return tab_id, self.tabs.children, self.__render_tab(tab_id)
             return at, self.tabs.children, self.__render_tab(at), self.__render_tab(tab_id)
