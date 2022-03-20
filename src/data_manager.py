@@ -18,7 +18,7 @@ class DataManager():
         :return: the time series data
         '''
         if start_date is None:
-            raise "No start date given"
+            raise Exception("No start date given")
 
         if end_date is not None:
             data = self.client.time_series('activities/' + data_type, base_date=start_date, end_date=end_date)

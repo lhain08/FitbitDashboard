@@ -10,7 +10,7 @@ def read_id_and_secret():
     except:
         print("ERROR: credentials.txt does not exist or has invalid format")
         print("\tShould contain CLIENT_ID and CLIENT_SECRET on first and second lines respectively")
-        raise("Bad File")
+        raise Exception("Bad File")
     return CLIENT_ID, CLIENT_SECRET
 
 def get_client():
@@ -18,14 +18,14 @@ def get_client():
     try:
         CLIENT_ID, CLIENT_SECRET = read_id_and_secret()
     except:
-        raise("Could not find or read client id and secret")
+        raise Exception("Could not find or read client id and secret")
 
     # Create server and run browser authorization
     try:
         server = Oauth2.OAuth2Server(CLIENT_ID, CLIENT_SECRET)
         server.browser_authorize()
     except:
-        raise ("Authorization Failed")
+        raise Exception("Authorization Failed")
     # Get tokens and client
     ACCESS_TOKEN = str(server.fitbit.client.session.token['access_token'])
     REFRESH_TOKEN = str(server.fitbit.client.session.token['refresh_token'])
