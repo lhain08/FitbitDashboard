@@ -16,7 +16,8 @@ class DashboardTabs():
         # Create first tab
         self.new_tab()
 
-        @app.callback(Output("content", "children"), Input("tabs", "active_tab"), prevent_initial_call=True)
+        @app.callback(Output("content", "children"),
+                      Input("tabs", "active_tab"), prevent_initial_call=True)
         def switch_tab(at):
             return self.__render_tab(at)
 
@@ -37,7 +38,9 @@ class DashboardTabs():
         tab_count = len(self.tabs.children)
         tab = dbc.Tab(label='Dashboard %d' % (tab_count), tab_id=tab_id)
         self.tabs.children.append(tab)
-        self.dashboards[tab_id] = Dashboard(self.app, tab, "dashboard-%d" % (self.tab_index))
+        self.dashboards[tab_id] = Dashboard(
+            self.app, tab, "dashboard-%d" %
+            (self.tab_index))
         return tab_id
 
     def render(self):

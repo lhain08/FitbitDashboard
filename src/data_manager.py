@@ -6,10 +6,16 @@ class DataManager():
     DataManager Class
     Responsible for retrieving data from the Fitbit Client
     '''
+
     def __init__(self):
         self.client = connect.get_client()
 
-    def __get_time_series(self, data_type, start_date, end_date=None, period='15min'):
+    def __get_time_series(
+            self,
+            data_type,
+            start_date,
+            end_date=None,
+            period='15min'):
         '''
         __get_time_series - used for getting time series for all activity resources
         :param data_type: required, specifies the desired activity resource
@@ -22,11 +28,15 @@ class DataManager():
             raise Exception("No start date given")
 
         if end_date is not None:
-            data = self.client.time_series('activities/' + data_type, base_date=start_date, end_date=end_date)
+            data = self.client.time_series(
+                'activities/' + data_type,
+                base_date=start_date,
+                end_date=end_date)
             return data['activites-' + data_type]
 
         else:
-            data = self.client.intraday_time_series('activities/' + data_type, base_date=start_date, detail_level=period)
+            data = self.client.intraday_time_series(
+                'activities/' + data_type, base_date=start_date, detail_level=period)
             return data['activities-' + data_type + '-intraday']
 
     def get_steps_data(self, start_date, end_date=None, period='15min'):
@@ -67,7 +77,8 @@ class DataManager():
         :param period: time increments for intraday data, defaults to 15min. Can also be 1sec or 1min.
         :return: the time series data
         '''
-        return self.__get_time_series('elevation', start_date, end_date, period)
+        return self.__get_time_series(
+            'elevation', start_date, end_date, period)
 
     def get_floors_data(self, start_date, end_date=None, period='15min'):
         '''
