@@ -1,5 +1,6 @@
 from api import connect
 
+
 class DataManager():
     '''
     DataManager Class

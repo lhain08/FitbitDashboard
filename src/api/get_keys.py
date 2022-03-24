@@ -80,7 +80,8 @@ class OAuth2Server:
         if error:
             return error
         else:
-            raise cherrypy.HTTPRedirect("http://localhost:8000/")
+            # raise cherrypy.HTTPRedirect("http://localhost:8000/")
+            return "<p>Starting dashboard, wait a few moments and then navigate <a href='http://localhost:8000/'>here</a></p>"
 
     def _fmt_failure(self, message):
         tb = traceback.format_tb(sys.exc_info()[2])
