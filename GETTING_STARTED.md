@@ -39,4 +39,4 @@ Then, follow the instructions in [https://docs.docker.com/desktop/windows/wsl/](
    docker build -t dashboard .
    docker run -it -p 8000:8000 -p 8080:8080 dashboard
    ````
-   
+   2. Open the url http://localhost:8080/ if you have just rebuilt the docker container (this will get the api keys) then wait a moment and go to http://localhost:8000/ (the link should be displayed already at this point) to access your dashboard.
