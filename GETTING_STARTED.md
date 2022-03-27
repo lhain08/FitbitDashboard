@@ -20,11 +20,7 @@ Then, follow the instructions in [https://docs.docker.com/desktop/windows/wsl/](
 
 ## Installing Requirements
 1. You can clone the Github project by typing in ````git clone git@github.com:lhain08/FitbitDashboard.git```` in the command line in order to obtain a local copy of the project 
-2. This project contains the [python-fitbit](https://github.com/orcasgit/python-fitbit/tree/6a0a7cba26c26e6c8096bf51d4cf7f19e113ed96) Github project as a submodule. However, after cloning this repository, you will see that in ````src/api/python_fitbit```` is empty in your local repo. To obtain the files from the project, run this in your command line: 
-
-   ````git submodule update --init --recursive````
-
-3. Create a text file called ````credentials.txt```` in ````src/api````. Refer back to *Step 4* in **Fitbit App Registration**. In this text file, use your data from those two fields to write this within ````credentials.txt````:
+2. Create a text file called ````credentials.txt```` in ````src/api````. Refer back to *Step 4* in **Fitbit App Registration**. In this text file, use your data from those two fields to write this within ````credentials.txt````:
 
    ````
    <client id>
@@ -36,7 +32,6 @@ Then, follow the instructions in [https://docs.docker.com/desktop/windows/wsl/](
 1. Open Docker Desktop. To run the project, run these two commands in your command prompt or bash window 
 
    ````
-   docker build -t dashboard .
-   docker run -it -p 8000:8000 -p 8080:8080 dashboard
+   docker-compose up --build
    ````
    2. Open the url http://localhost:8080/ if you have just rebuilt the docker container (this will get the api keys) then wait a moment and go to http://localhost:8000/ (the link should be displayed already at this point) to access your dashboard.

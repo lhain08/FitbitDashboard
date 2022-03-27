@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  dashboard:
+    restart: unless-stopped
+    container_name: dashboard
+    ports:
+      - 8080:8080
+      - 8000:8000
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/usr/src
