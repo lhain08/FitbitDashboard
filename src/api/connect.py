@@ -39,13 +39,13 @@ def get_client():
     # Try to open cached tokens
     try:
         access_token, refresh_token = read_tokens()
-    except:
+    except Exception as e:
         # Create server and wait to run browser authorization
         try:
             server = OAuth2Server(client_id, client_secret, my_uri="http://0.0.0.0:8080", \
                                          redirect_uri="http://127.0.0.1:8080/authorize")
             server.start()
-        except:
+        except Exception as e:
             raise Exception("Authorization Failed")
         # Get tokens and client
         access_token = str(server.fitbit.client.session.token['access_token'])

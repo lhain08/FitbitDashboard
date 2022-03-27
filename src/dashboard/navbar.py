@@ -3,10 +3,11 @@ import dash_bootstrap_components as dbc
 import dash
 
 class NavBar():
-    def __init__(self, app, tabs, id='navbar'):
-        self.id = id
+    def __init__(self, app, tabs, navid='navbar'):
+        self.navid = navid
         self.tabs = tabs
         self. navbar = dbc.NavbarSimple(
+            id=self.navid
             children=[
                 dbc.NavItem(dbc.Button("New Widget", id="new-widget", n_clicks=0)),
                 dbc.NavItem(dbc.Button("New Dashboard", id="new-dashboard", n_clicks=0)),
