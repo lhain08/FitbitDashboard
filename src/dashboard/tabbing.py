@@ -1,3 +1,4 @@
+"""Tabbing Module for tracking all current Tabs/Dashboards"""
 from dash import html, Input, Output
 import dash_bootstrap_components as dbc
 
@@ -32,8 +33,8 @@ class DashboardTabs():
     """
     def __init__(self, app):
         self.app = app
-        self.id = "tabs"
-        self.tabs = dbc.Tabs([], id=self.id)
+        self.my_id = "tabs"
+        self.tabs = dbc.Tabs([], id=self.my_id)
         self.dashboards = {}
         self.tab_index = 0
         self.content_id = "content"
@@ -41,7 +42,8 @@ class DashboardTabs():
         # Create first tab
         self.new_tab()
 
-        @app.callback(Output("content", "children"), Input("tabs", "active_tab"), prevent_initial_call=True)
+        @app.callback(Output("content", "children"), Input("tabs", "active_tab"),
+                      prevent_initial_call=True)
         def switch_tab(active_tab):
             return self.__render_tab(active_tab)
 
