@@ -1,4 +1,7 @@
 # Fitbit Dashboard
+
+[![CodeFactor](https://www.codefactor.io/repository/github/lhain08/FitbitDashboard/badge)](https://www.codefactor.io/repository/github/lhain08/FitbitDashboard)
+
 ## Description
 Web app for creating customizable dashboards with Fitbit data
 
