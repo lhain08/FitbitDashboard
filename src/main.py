@@ -1,4 +1,4 @@
-import dash
+""" Main module: Runs the application """
 from dash import Dash, html
 import dash_bootstrap_components as dbc
 
