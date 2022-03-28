@@ -1,9 +1,10 @@
 from dash import Output, Input
 import dash_bootstrap_components as dbc
 import dash
+from .widget_modal import WidgetModal
 
-class NavBar():
-    def __init__(self, app, tabs, navid='navbar'):
+class Navbar():
+    def __init__(self, app, tabs, modal, navid='navbar'):
         self.navid = navid
         self.tabs = tabs
         self. navbar = dbc.NavbarSimple(
@@ -11,19 +12,13 @@ class NavBar():
             children=[
                 dbc.NavItem(dbc.Button("New Widget", id="new-widget", n_clicks=0)),
                 dbc.NavItem(dbc.Button("New Dashboard", id="new-dashboard", n_clicks=0)),
+                modal.render()
             ],
             brand="Fitbit Dashboard",
             brand_href="#",
             color="primary",
             dark=True,
         )
-
-        @app.callback(Output("new-widget", "id"), Input("new-widget", "n_clicks"),
-                      suppress_callback_exceptions=True, prevent_initial_call=True)
-        def open_widget_modal(clicks):
-            print("WE WILL OPEN A MODAL HERE")
-            # TODO: Create the widget modal for creating new widgets
-            raise dash.exceptions.PreventUpdate
 
         @app.callback([Output(self.tabs.my_id, "active_tab"), Output(self.tabs.my_id, "children")], Input("new-dashboard", "n_clicks"),
                       suppress_callback_exceptions=True, prevent_initial_call=True)
