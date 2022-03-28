@@ -33,7 +33,8 @@ class WidgetModal():
             is_open=False,
         )
 
-        @app.callback([Output("modal", "is_open"), Output("dashboard-selection", "options")],
+        @app.callback([Output("modal", "is_open"), Output("dashboard-selection", "options"),
+                       Output("content-wrapper", "children")],
                       [trigger, Input("submit", "n_clicks"), Input("dashboard-selection", "value")],
                       State("modal", "is_open"),
                       suppress_callback_exceptions=True, prevent_initial_call=True)
@@ -41,13 +42,15 @@ class WidgetModal():
             changed_id = [p['prop_id'] for p in callback_context.triggered][0]
             if open and not is_open:
                 return not is_open,\
-                       [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()]
+                       [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
+                       dash.no_update
             elif 'submit' in changed_id:
                 tabs.dashboards[dashboard].widgets.append(
-                    MockWidget("widget on " + tabs.dashboards[dashboard].parent_tab.label)
+                    MockWidget("widget", "I'm a widget on " + tabs.dashboards[dashboard].parent_tab.label)
                 )
-                return not is_open, dash.no_update
-            return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()]
+                return not is_open, dash.no_update, tabs.render_content()
+            return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
+                   dash.no_update
 
     def render(self):
         return self.content

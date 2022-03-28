@@ -8,6 +8,7 @@ class Dashboard():
         self.dashid = dashid
         self.widgets = []
 
+
     def render(self):
         return html.Div(id=self.dashid,
                         children=[w.render() for w in self.widgets])

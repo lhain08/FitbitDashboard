@@ -8,13 +8,12 @@ class AppBuilder():
     """ Factory for generating the full app """
     def __init__(self, app):
         self.app = app
+        self.tabs = DashboardTabs(self.app)
+        self.modal = WidgetModal("modal", Input("new-widget", "n_clicks"), self.tabs, self.app)
+        self.navbar = Navbar(self.app, self.tabs, self.modal)
 
     def build(self):
-        tabs = DashboardTabs(self.app)
-        modal = WidgetModal("modal", Input("new-widget", "n_clicks"), tabs, self.app)
-        navbar = Navbar(self.app, tabs, modal)
-
-        return html.Div(children=[
-            navbar.render(),
-            tabs.render()
+        return html.Div(id='page', children=[
+            self.navbar.render(),
+            self.tabs.render()
         ])
