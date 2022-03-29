@@ -29,9 +29,9 @@ Then, follow the instructions in [https://docs.docker.com/desktop/windows/wsl/](
    It may be wise to create a copy of this text file and put it somewhere else where you can easily copy and paste it back into your own local repository. 
    
 ## Running    
-1. Open Docker Desktop. To run the project, run these two commands in your command prompt or bash window 
+1. Open Docker Desktop. To run the project, run this two command in your command prompt or bash window 
 
    ````
    docker-compose up --build
    ````
-   2. Open the url http://localhost:8080/ if you have just rebuilt the docker container (this will get the api keys) then wait a moment and go to http://localhost:8000/ (the link should be displayed already at this point) to access your dashboard.
+2. Open the url http://localhost:8080/ if you have just rebuilt the docker container (this will get the api keys) then wait a moment and go to http://localhost:8000/ (the link should be displayed already at this point) to access your dashboard.
