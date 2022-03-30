@@ -6,8 +6,6 @@ from data_manager import DataManager
 from dashboard.app_builder import AppBuilder
 
 dm = DataManager()
-t= dm.get_steps_data("2019-07-01", "2019-07-03")
-t= dm.get_steps_data("2019-07-01", "15min")
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 server = app.server
