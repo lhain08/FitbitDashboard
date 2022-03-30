@@ -60,7 +60,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['dateTime'])
             heartdf = ({'Steps':val_list,'Time':time_list})
-            print(heartdf)
         else:
             fit_statsHR = self.client.intraday_time_series('activities/steps', base_date=start_date, detail_level=descriptor)
 
@@ -70,7 +69,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['time'])
             heartdf = ({'Steps':val_list,'Time':time_list})
-            print(heartdf)
 
         return heartdf
         #return self.__get_time_series('steps', start_date, end_date, period)
