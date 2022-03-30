@@ -96,7 +96,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['dateTime'])
             heartdf = ({'Distance':val_list,'Time':time_list})
-            print(heartdf)
         else:
             fit_statsHR = self.client.intraday_time_series('activities/distance', base_date=start_date, detail_level=descriptor)
 
@@ -106,7 +105,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['time'])
             heartdf = ({'Distance':val_list,'Time':time_list})
-            print(heartdf)
 
         return heartdf
 
@@ -134,7 +132,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['dateTime'])
             heartdf = ({'Calories':val_list,'Time':time_list})
-            print(heartdf)
         else:
             fit_statsHR = self.client.intraday_time_series('activities/calories', base_date=start_date, detail_level=descriptor)
 
@@ -144,7 +141,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['time'])
             heartdf = ({'Calories':val_list,'Time':time_list})
-            print(heartdf)
 
         return heartdf
 
@@ -172,7 +168,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['dateTime'])
             heartdf = ({'Elevation':val_list,'Time':time_list})
-            print(heartdf)
         else:
             fit_statsHR = self.client.intraday_time_series('activities/elevation', base_date=start_date, detail_level=descriptor)
 
@@ -182,7 +177,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['time'])
             heartdf = ({'Elevation':val_list,'Time':time_list})
-            print(heartdf)
 
         return heartdf
 
@@ -210,7 +204,6 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['dateTime'])
             heartdf = ({'Floors':val_list,'Time':time_list})
-            print(heartdf)
         else:
             fit_statsHR = self.client.intraday_time_series('activities/floors', base_date=start_date, detail_level=descriptor)
 
@@ -220,6 +213,5 @@ class DataManager():
                 val_list.append(i['value'])
                 time_list.append(i['time'])
             heartdf = ({'Floors':val_list,'Time':time_list})
-            print(heartdf)
 
         return heartdf
