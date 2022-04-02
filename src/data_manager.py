@@ -1,6 +1,7 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
 from api import connect
 import re
+import datetime
 
 class DataManager():
     '''
@@ -9,6 +10,40 @@ class DataManager():
     '''
     def __init__(self):
         self.client = connect.get_client()
+
+    def get_data(self, data_type, time_period):
+        method = None
+        if data_type == 'Steps':
+            method = self.get_steps_data
+        elif data_type == 'Distance':
+            method = self.get_distance_data
+        elif data_type == 'Calories':
+            method = self.get_calories_data
+        elif data_type == 'Elevation':
+            method = self.get_elevation_data
+        elif data_type == 'Floors':
+            method = self.get_floors_data
+
+        if method == None:
+            raise Exception("Data type does not exist")
+
+        start_date = None
+        descriptor = None
+
+        if time_period == 'day':
+            start_date = str(datetime.date.today())
+            descriptor = '15min'
+        elif time_period == 'week':
+            start_date = str(datetime.date.today() - datetime.timedelta(days=7))
+            descriptor = str(datetime.date.today())
+        elif time_period == 'month':
+            start_date = str(datetime.date.today() - datetime.timedelta(days=30))
+            descriptor = str(datetime.date.today())
+        elif time_period == 'year':
+            start_date = str(datetime.date.today() - datetime.timedelta(days=365))
+            descriptor = str(datetime.date.today())
+
+        return method(start_date, descriptor)
 
     def __get_time_series(self, data_type, start_date, end_date=None, period='15min'):
         '''
@@ -57,7 +92,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-steps']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
             heartdf = ({'Steps':val_list,'Time':time_list})
         else:
@@ -66,7 +101,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-steps-intraday']['dataset']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['time'])
             heartdf = ({'Steps':val_list,'Time':time_list})
 
@@ -93,7 +128,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-distance']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
             heartdf = ({'Distance':val_list,'Time':time_list})
         else:
@@ -102,7 +137,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-distance-intraday']['dataset']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['time'])
             heartdf = ({'Distance':val_list,'Time':time_list})
 

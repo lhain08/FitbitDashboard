@@ -2,13 +2,15 @@ from dash import Input, Output, State, html, dcc, callback_context
 import dash
 import dash_bootstrap_components as dbc
 from .widgets.mock_widget import MockWidget
+from .widgets.bar_chart import BarChartWidget
 
 class WidgetModal():
-    def __init__(self, my_id, trigger, tabs, app):
+    def __init__(self, my_id, trigger, tabs, app, data_manager):
         self.my_id = my_id
         self.trigger = trigger
         self.tabs = tabs
         self.app = app
+        self.data_manager = data_manager
 
         dashboard_list = [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in tabs.dashboards.values()]
 
@@ -46,7 +48,8 @@ class WidgetModal():
                        dash.no_update
             elif 'submit' in changed_id:
                 tabs.dashboards[dashboard].widgets.append(
-                    MockWidget("widget", "I'm a widget on " + tabs.dashboards[dashboard].parent_tab.label)
+                    #MockWidget("widget", "I'm a widget on " + tabs.dashboards[dashboard].parent_tab.label)
+                    BarChartWidget(self.data_manager, 'Distance', 'year')
                 )
                 return not is_open, dash.no_update, tabs.render_content()
             return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
