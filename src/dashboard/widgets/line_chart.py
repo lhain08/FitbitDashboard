@@ -5,8 +5,7 @@ from dash import html
 
 from .widget_interface import WidgetInterface
 
-
-class BarChartWidget(WidgetInterface):
+class LineChartWidget(WidgetInterface):
     def __init(self, data_manager, data_type, time_period):
         super().__init__(data_manager, data_type, time_period)
 
@@ -17,13 +16,13 @@ class BarChartWidget(WidgetInterface):
         x = data['Time']
 
         # Create the chart
-        fig = go.Figure([go.Bar(x=x, y=y)])
+        fig = go.Figure([go.Line(x=x, y=y)])
 
-        # To be used in the future
+        # To be used in the future 
         # fig.update_layout(legend_title_text = "Activity")
         # fig.update_xaxes(title_text="Time")
         # fig.update_yaxes(title_text="Data Type")
-        
+
         return html.Div([
             dcc.Graph(figure=fig)
         ])
