@@ -10,7 +10,7 @@ dm = DataManager()
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 server = app.server
 
-builder = AppBuilder(app)
+builder = AppBuilder(app, dm)
 
 app.title = "Fitbit Dashboard"
 app.layout = builder.build
