@@ -49,7 +49,7 @@ class WidgetModal():
             elif 'submit' in changed_id:
                 tabs.dashboards[dashboard].widgets.append(
                     #MockWidget("widget", "I'm a widget on " + tabs.dashboards[dashboard].parent_tab.label)
-                    BarChartWidget(self.data_manager, 'Distance', 'week')
+                    BarChartWidget(self.data_manager, 'Distance', 'year')
                 )
                 return not is_open, dash.no_update, tabs.render_content()
             return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\

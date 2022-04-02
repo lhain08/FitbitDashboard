@@ -17,6 +17,12 @@ class DataManager():
             method = self.get_steps_data
         elif data_type == 'Distance':
             method = self.get_distance_data
+        elif data_type == 'Calories':
+            method = self.get_calories_data
+        elif data_type == 'Elevation':
+            method = self.get_elevation_data
+        elif data_type == 'Floors':
+            method = self.get_floors_data
 
         if method == None:
             raise Exception("Data type does not exist")
@@ -24,8 +30,17 @@ class DataManager():
         start_date = None
         descriptor = None
 
-        if time_period == 'week':
+        if time_period == 'day':
+            start_date = str(datetime.date.today())
+            descriptor = '15min'
+        elif time_period == 'week':
             start_date = str(datetime.date.today() - datetime.timedelta(days=7))
+            descriptor = str(datetime.date.today())
+        elif time_period == 'month':
+            start_date = str(datetime.date.today() - datetime.timedelta(days=30))
+            descriptor = str(datetime.date.today())
+        elif time_period == 'year':
+            start_date = str(datetime.date.today() - datetime.timedelta(days=365))
             descriptor = str(datetime.date.today())
 
         return method(start_date, descriptor)
