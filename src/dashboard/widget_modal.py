@@ -3,6 +3,7 @@ import dash
 import dash_bootstrap_components as dbc
 from .widgets.mock_widget import MockWidget
 from .widgets.bar_chart import BarChartWidget
+from .widgets.line_chart import LineChartWidget
 
 class WidgetModal():
     def __init__(self, my_id, trigger, tabs, app, data_manager):
@@ -50,6 +51,7 @@ class WidgetModal():
                 tabs.dashboards[dashboard].widgets.append(
                     #MockWidget("widget", "I'm a widget on " + tabs.dashboards[dashboard].parent_tab.label)
                     BarChartWidget(self.data_manager, 'Distance', 'year')
+                    #LineChartWidget(self.data_manager, 'Distance', 'Year')
                 )
                 return not is_open, dash.no_update, tabs.render_content()
             return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
