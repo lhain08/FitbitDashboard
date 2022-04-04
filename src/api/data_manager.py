@@ -1,7 +1,9 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
-from src.api import connect
 import re
 import datetime
+from fitbit import exceptions
+
+import api.connect as connect
 
 class DataManager():
     '''
