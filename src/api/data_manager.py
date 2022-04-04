@@ -15,7 +15,7 @@ class DataManager():
         if self.client is None:
             self.client = connect.get_client()
 
-    def get_data(self, data_type, time_period):
+    def get_data(self, data_type, start_date, end_date):
         method = None
         if data_type == 'Steps':
             method = self.get_steps_data
@@ -31,23 +31,7 @@ class DataManager():
         if method == None:
             raise Exception("Data type does not exist")
 
-        start_date = None
-        descriptor = None
-
-        if time_period == 'day':
-            start_date = str(datetime.date.today())
-            descriptor = '15min'
-        elif time_period == 'week':
-            start_date = str(datetime.date.today() - datetime.timedelta(days=7))
-            descriptor = str(datetime.date.today())
-        elif time_period == 'month':
-            start_date = str(datetime.date.today() - datetime.timedelta(days=30))
-            descriptor = str(datetime.date.today())
-        elif time_period == 'year':
-            start_date = str(datetime.date.today() - datetime.timedelta(days=365))
-            descriptor = str(datetime.date.today())
-
-        return method(start_date, descriptor)
+        return method(start_date, end_date)
 
     def __get_time_series(self, data_type, start_date, end_date=None, period='15min'):
         '''

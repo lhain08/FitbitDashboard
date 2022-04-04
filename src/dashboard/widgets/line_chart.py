@@ -6,12 +6,12 @@ from dash import html
 from .widget_interface import WidgetInterface
 
 class LineChartWidget(WidgetInterface):
-    def __init(self, data_manager, data_type, time_period):
-        super().__init__(data_manager, data_type, time_period)
+    def __init(self, data_manager, data_type, start_date, end_date):
+        super().__init__(data_manager, data_type, start_date, end_date)
 
     def render(self):
         # Get the data first
-        data = self.data_manager.get_data(self.data_type, self.time_period)
+        data = self.data_manager.get_data(self.data_type, self.start_date, self.end_date)
         y = data[self.data_type]
         x = data['Time']
 
