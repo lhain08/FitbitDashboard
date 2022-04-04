@@ -1,5 +1,5 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
-from api import connect
+from src.api import connect
 import re
 import datetime
 
@@ -8,8 +8,10 @@ class DataManager():
     DataManager Class
     Responsible for retrieving data from the Fitbit Client
     '''
-    def __init__(self):
-        self.client = connect.get_client()
+    def __init__(self, client=None):
+        self.client = client
+        if self.client is None:
+            self.client = connect.get_client()
 
     def get_data(self, data_type, time_period):
         method = None
@@ -85,7 +87,7 @@ class DataManager():
         :return: the time series data
         '''
         # Check if descriptor is date format
-        r = re.compile('\d{4}-\d{2}-\d{2}')
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/steps', base_date=start_date, end_date=descriptor)
 
@@ -121,7 +123,7 @@ class DataManager():
         :return: the time series data
         '''
         # Check if descriptor is date format
-        r = re.compile('\d{4}-\d{2}-\d{2}')
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/distance', base_date=start_date, end_date=descriptor)
 
@@ -157,14 +159,14 @@ class DataManager():
         :return: the time series data
         '''
         # Check if descriptor is date format
-        r = re.compile('\d{4}-\d{2}-\d{2}')
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/calories', base_date=start_date, end_date=descriptor)
 
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-calories']:
-                val_list.append(i['value'])
+                val_list.append(int(i['value']))
                 time_list.append(i['dateTime'])
             heartdf = ({'Calories':val_list,'Time':time_list})
         else:
@@ -173,7 +175,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-calories-intraday']['dataset']:
-                val_list.append(i['value'])
+                val_list.append(int(i['value']))
                 time_list.append(i['time'])
             heartdf = ({'Calories':val_list,'Time':time_list})
 
@@ -193,14 +195,14 @@ class DataManager():
         :return: the time series data
         '''
         # Check if descriptor is date format
-        r = re.compile('\d{4}-\d{2}-\d{2}')
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/elevation', base_date=start_date, end_date=descriptor)
 
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-elevation']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
             heartdf = ({'Elevation':val_list,'Time':time_list})
         else:
@@ -209,7 +211,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-elevation-intraday']['dataset']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['time'])
             heartdf = ({'Elevation':val_list,'Time':time_list})
 
@@ -229,14 +231,14 @@ class DataManager():
         :return: the time series data
         '''
         # Check if descriptor is date format
-        r = re.compile('\d{4}-\d{2}-\d{2}')
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/floors', base_date=start_date, end_date=descriptor)
 
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-floors']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
             heartdf = ({'Floors':val_list,'Time':time_list})
         else:
@@ -245,7 +247,7 @@ class DataManager():
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-floors-intraday']['dataset']:
-                val_list.append(i['value'])
+                val_list.append(float(i['value']))
                 time_list.append(i['time'])
             heartdf = ({'Floors':val_list,'Time':time_list})
 
