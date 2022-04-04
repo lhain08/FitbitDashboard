@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    name: pytests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container: python:3.9
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: pip install -r src/requirements.txt -r src/testing/requirements.txt
+
+      - name: Run Unit Tests
+        run: pytest
