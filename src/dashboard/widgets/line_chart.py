@@ -16,7 +16,7 @@ class LineChartWidget(WidgetInterface):
         x = data['Time']
 
         # Create the chart
-        fig = go.Figure([go.Line(x=x, y=y)])
+        fig = go.Figure(data=go.Scatter(x=x, y=y))
 
         # To be used in the future 
         # fig.update_layout(legend_title_text = "Activity")
