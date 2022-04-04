@@ -168,4 +168,3 @@ class TestDataManager:
             'Floors': [1, 2, 3]
         }
         assert self.mock_client.time_series.called_with('activities/floors', base_date='2022-04-01', detail_level='15min')
-
