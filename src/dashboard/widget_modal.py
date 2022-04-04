@@ -1,4 +1,5 @@
 from dash import Input, Output, State, html, dcc, callback_context
+from datetime import date
 import dash
 import dash_bootstrap_components as dbc
 from .widgets.mock_widget import MockWidget
@@ -20,11 +21,26 @@ class WidgetModal():
                 dbc.ModalHeader(dbc.ModalTitle("Create A Widget")),
                 dbc.ModalBody(html.Div(children=[
                     dbc.Label("Select your dashboard", html_for="dashboard-selection"),
-                    dcc.Dropdown(
+                    dcc.Dropdown(style={'color': 'black'},
                         options = dashboard_list,
                         value = dashboard_list[0]['value'],
                         id="dashboard-selection",
-                    ),
+                    ), html.Br(),
+                    dbc.Label("Select your chart type", html_for="chart-type"), html.Br(),
+                    dcc.RadioItems(['Bar', 'Line'], 'Bar', labelStyle={'display': 'block'}, id="chart-type"), html.Br(),
+                    dbc.Label("Select your data type", html_for="datatype-selection"), html.Br(),
+                    dcc.Dropdown(style={'color': 'black'},
+                        options = ['Steps', 'Distance', 'Calories', 'Elevation', 'Floors'],
+                        value = 'Steps',
+                        id="datatype-selection",
+                    ), html.Br(),
+                    dbc.Label("Select your time period", html_for="time-period"), html.Br(),
+                    dcc.DatePickerRange(
+                        id="time-period",
+                        min_date_allowed=date(1950, 1, 1),
+                        max_date_allowed=date(2027, 4, 27),
+                        initial_visible_month=date(2022, 4, 4),
+                    )
                 ])),
                 dbc.ModalFooter(
                     dbc.Button(
