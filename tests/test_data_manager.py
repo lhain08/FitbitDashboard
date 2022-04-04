@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 import pytest
 
-from src.data_manager import DataManager
+from src.api.data_manager import DataManager
 
 
 class TestDataManager:

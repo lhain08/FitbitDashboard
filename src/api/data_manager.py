@@ -1,8 +1,9 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
-from api import connect
 import re
 import datetime
 from fitbit import exceptions
+
+import api.connect as connect
 
 class DataManager():
     '''
@@ -45,10 +46,8 @@ class DataManager():
         elif time_period == 'year':
             start_date = str(datetime.date.today() - datetime.timedelta(days=365))
             descriptor = str(datetime.date.today())
-        try:
-            return method(start_date, descriptor)
-        except exceptions.HTTPUnauthorized:
-            connect.refresh_tokens(self.client)
+
+        return method(start_date, descriptor)
 
     def __get_time_series(self, data_type, start_date, end_date=None, period='15min'):
         '''

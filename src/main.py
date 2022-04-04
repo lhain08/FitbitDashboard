@@ -3,15 +3,15 @@ from dash import Dash, html
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
 
-from data_manager import DataManager
+from api.data_manager import DataManager
 from dashboard.app_builder import AppBuilder
 
-dm = DataManager()
-
+# Generate our app
 load_figure_template(['darkly'])
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
-server = app.server
 
+# Create data manager and app builder
+dm = DataManager()
 builder = AppBuilder(app, dm)
 
 app.title = "Fitbit Dashboard"
