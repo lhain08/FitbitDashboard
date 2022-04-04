@@ -20,14 +20,19 @@ def read_tokens():
         with open('api/tokens.txt', 'r', encoding="utf-8") as tokens:
             access = tokens.readline().strip()
             refresh = tokens.readline().strip()
-        return access, refresh
+            expires = float(tokens.readline().strip())
+        return access, refresh, expires
     except:
         raise Exception("Tokens do not exist")
 
-def write_tokens(access, refresh):
+def write_tokens(access, refresh, expires):
     """Caches the tokens to a file"""
     with open('api/tokens.txt', 'w', encoding="utf-8") as file:
-        file.write(access + "\n" + refresh)
+        file.write(access + "\n" + refresh + "\n" + str(expires))
+
+def refresh_tokens(token):
+    """Callback function for updating the token cache when tokens are expired"""
+    write_tokens(token['access_token'], token['refresh_token'], token['expires_at'])
 
 def get_client():
     """Establishes authorization for the Fitbit API"""
@@ -38,7 +43,7 @@ def get_client():
 
     # Try to open cached tokens
     try:
-        access_token, refresh_token = read_tokens()
+        access_token, refresh_token, expires_at = read_tokens()
     except Exception as e:
         # Create server and wait to run browser authorization
         try:
@@ -50,10 +55,12 @@ def get_client():
         # Get tokens and client
         access_token = str(server.fitbit.client.session.token['access_token'])
         refresh_token = str(server.fitbit.client.session.token['refresh_token'])
-        write_tokens(access_token, refresh_token)
+        expires_at = float(server.fitbit.client.session.token['expires_at'])
+        write_tokens(access_token, refresh_token, expires_at)
 
     client = fitbit.Fitbit(client_id, client_secret, oauth2=True,
                            access_token=access_token, refresh_token=refresh_token,
+                           expires_at=expires_at, refresh_cb=refresh_tokens,
                            redirect_uri="http://127.0.0.1:8080/authorize")
 
     return client
