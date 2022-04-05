@@ -7,8 +7,8 @@ from .widget_interface import WidgetInterface
 
 
 class BarChartWidget(WidgetInterface):
-    def __init(self, data_manager, data_type, start_date, end_date):
-        super().__init__(data_manager, data_type, start_date, end_date)
+    def __init__(self, data_manager, data_type, start_date, end_date, name='Bar Chart'):
+        super().__init__(data_manager, data_type, start_date, end_date, name)
 
     def render(self):
         # Get the data first

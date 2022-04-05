@@ -10,7 +10,6 @@ class WidgetInterface():
         if self.start_date == self.end_date:
             self.end_date = '15min' # Set the end date as a period instead for intraday data
             self.intraday = True
-
         self.name = name
 
     def render(self):
