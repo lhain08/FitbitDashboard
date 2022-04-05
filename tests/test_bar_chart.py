@@ -25,7 +25,7 @@ class TestBarChartWidget:
         assert self.mock_data_manager.get_data.called_with('Steps', '2022-04-01', '2022-04-04')
 
         # Verify the output content
-        """
+        '''
         assert type(widget_output) == html.Div
         graph = widget_output.children[0]
         assert type(graph) == dcc.Graph
@@ -33,4 +33,4 @@ class TestBarChartWidget:
         assert fig.data[0].type == 'bar'
         assert fig.data[0].x == ('2022-04-01', '2022-04-02', '2022-04-03',)
         assert fig.data[0].y == (1000, 2000, 3000)
-        """
+        '''
