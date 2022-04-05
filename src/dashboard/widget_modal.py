@@ -23,6 +23,13 @@ class WidgetModal():
 
         self.content = dbc.Modal(
             [
+                dbc.Alert(
+                    "Error: Please specify a date range",
+                    id="alert-auto",
+                    is_open=False,
+                    duration=4000,
+                    color="danger"
+                ),
                 dbc.ModalHeader(dbc.ModalTitle("Create A Widget")),
                 dbc.ModalBody(html.Div(children=[
                     dbc.Label("Select your dashboard", html_for="dashboard-selection"),
@@ -59,7 +66,7 @@ class WidgetModal():
         )
 
         @app.callback([Output("modal", "is_open"), Output("dashboard-selection", "options"),
-                       Output("content-wrapper", "children")],
+                       Output("content-wrapper", "children"), Output("alert-auto", "is_open")],
                       [trigger, Input("submit", "n_clicks"), Input("dashboard-selection", "value"),
                        Input('chart-type', 'value'), Input('datatype-selection', 'value'),
                        Input('time-period', 'start_date'), Input('time-period', 'end_date')],
@@ -72,16 +79,19 @@ class WidgetModal():
                 # Updates the dashboard list in case user has added new dashboards
                 return not is_open,\
                        [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
-                       dash.no_update
+                       dash.no_update, False
             # If submit was pressed, create a widget from the selected input
             elif 'submit' in changed_id:
+                if start_date is None or end_date is None:
+                    return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
+                   dash.no_update, True
                 tabs.dashboards[dashboard].widgets.append(
                     self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date)
                 )
-                return not is_open, dash.no_update, tabs.render_content()
+                return not is_open, dash.no_update, tabs.render_content(), False
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
             return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
-                   dash.no_update
+                   dash.no_update, False
 
     def render(self):
         return self.content
