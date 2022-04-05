@@ -24,16 +24,19 @@ class StatsCardWidget(WidgetInterface):
             max_index = max(range(len(values)), key=values.__getitem__)
             max_value = values[max_index]
             max_time = dateTimes[max_index]
+            active_intervals = [v for v in values if v != 0]
+            avg_interval = sum(active_intervals) / len(active_intervals)
 
             # Generate the card body
             body = html.Div([
                 html.H3(f"Total {self.data_type}", style={'text-align': 'center'}),
-                html.H4(f"{total:.3f} {Constants.UNITS[self.data_type]}".rstrip('0').rstrip('.'),
+                html.H4(f"{total:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
                         style={'text-align': 'center'}),
-                # html.H3(f"Peak Time", style={'text-align': 'center'}),
-                # html.H4(f"{avg:.3f}".rstrip('0').rstrip('.'), style={'text-align': 'center'}),
-                html.H3(f"Peak Interval", style={'text-align': 'center'}),
-                html.H4(f"{max_value:.3f} {Constants.UNITS[self.data_type]}".rstrip('0').rstrip('.'),
+                html.H3(f"Average Active 15 Minute Interval", style={'text-align': 'center'}),
+                html.H4(f"{avg_interval:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
+                        style={'text-align': 'center'}),
+                html.H3(f"Peak 15 Minute Interval", style={'text-align': 'center'}),
+                html.H4(f"{max_value:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
                         style={'text-align': 'center'}),
                 html.H4(max_time, style={'text-align': 'center'})
             ])
@@ -47,13 +50,13 @@ class StatsCardWidget(WidgetInterface):
             # Generate the card body
             body = html.Div([
                 html.H3(f"Total {self.data_type}", style={'text-align': 'center'}),
-                html.H4(f"{total:.3f} {Constants.UNITS[self.data_type]}".rstrip('0').rstrip('.'),
+                html.H4(f"{total:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
                         style={'text-align': 'center'}),
                 html.H3(f"Average {self.data_type}", style={'text-align': 'center'}),
-                html.H4(f"{avg:.3f} {Constants.UNITS[self.data_type]}".rstrip('0').rstrip('.'),
+                html.H4(f"{avg:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
                         style={'text-align': 'center'}),
                 html.H3(f"Max {self.data_type} Per Day", style={'text-align': 'center'}),
-                html.H4(f"{max_value:.3f} {Constants.UNITS[self.data_type]}".rstrip('0').rstrip('.'),
+                html.H4(f"{max_value:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
                         style={'text-align': 'center'}),
                 html.H4(max_date.strftime("%b %d %Y"), style={'text-align': 'center'})
             ])
