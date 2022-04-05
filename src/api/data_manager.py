@@ -1,6 +1,6 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
 import re
-import datetime
+from datetime import datetime
 from fitbit import exceptions
 
 import api.connect as connect
@@ -82,7 +82,7 @@ class DataManager():
             for i in fit_statsHR['activities-steps']:
                 val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
-            heartdf = ({'Steps':val_list,'Time':time_list})
+            stepsdf = ({'Steps':val_list,'Time':time_list})
         else:
             fit_statsHR = self.client.intraday_time_series('activities/steps', base_date=start_date, detail_level=descriptor)
 
@@ -91,9 +91,9 @@ class DataManager():
             for i in fit_statsHR['activities-steps-intraday']['dataset']:
                 val_list.append(float(i['value']))
                 time_list.append(i['time'])
-            heartdf = ({'Steps':val_list,'Time':time_list})
+            stepsdf = ({'Steps':val_list,'Time':time_list})
 
-        return heartdf
+        return stepsdf
 
     def get_distance_data(self, start_date, descriptor):
         '''
@@ -118,7 +118,7 @@ class DataManager():
             for i in fit_statsHR['activities-distance']:
                 val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
-            heartdf = ({'Distance':val_list,'Time':time_list})
+            distancedf = ({'Distance':val_list,'Time':time_list})
         else:
             fit_statsHR = self.client.intraday_time_series('activities/distance', base_date=start_date, detail_level=descriptor)
 
@@ -127,9 +127,9 @@ class DataManager():
             for i in fit_statsHR['activities-distance-intraday']['dataset']:
                 val_list.append(float(i['value']))
                 time_list.append(i['time'])
-            heartdf = ({'Distance':val_list,'Time':time_list})
+            distancedf = ({'Distance':val_list,'Time':time_list})
 
-        return heartdf
+        return distancedf
 
     def get_calories_data(self, start_date, descriptor):
         '''
@@ -154,7 +154,7 @@ class DataManager():
             for i in fit_statsHR['activities-calories']:
                 val_list.append(int(i['value']))
                 time_list.append(i['dateTime'])
-            heartdf = ({'Calories':val_list,'Time':time_list})
+            caloriesdf = ({'Calories':val_list,'Time':time_list})
         else:
             fit_statsHR = self.client.intraday_time_series('activities/calories', base_date=start_date, detail_level=descriptor)
 
@@ -163,9 +163,9 @@ class DataManager():
             for i in fit_statsHR['activities-calories-intraday']['dataset']:
                 val_list.append(int(i['value']))
                 time_list.append(i['time'])
-            heartdf = ({'Calories':val_list,'Time':time_list})
+            caloriesdf = ({'Calories':val_list,'Time':time_list})
 
-        return heartdf
+        return caloriesdf
 
     def get_elevation_data(self, start_date, descriptor):
         '''
@@ -190,7 +190,7 @@ class DataManager():
             for i in fit_statsHR['activities-elevation']:
                 val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
-            heartdf = ({'Elevation':val_list,'Time':time_list})
+            elevationdf = ({'Elevation':val_list,'Time':time_list})
         else:
             fit_statsHR = self.client.intraday_time_series('activities/elevation', base_date=start_date, detail_level=descriptor)
 
@@ -199,9 +199,9 @@ class DataManager():
             for i in fit_statsHR['activities-elevation-intraday']['dataset']:
                 val_list.append(float(i['value']))
                 time_list.append(i['time'])
-            heartdf = ({'Elevation':val_list,'Time':time_list})
+            elevationdf = ({'Elevation':val_list,'Time':time_list})
 
-        return heartdf
+        return elevationdf
 
     def get_floors_data(self, start_date, descriptor):
         '''
@@ -226,7 +226,7 @@ class DataManager():
             for i in fit_statsHR['activities-floors']:
                 val_list.append(float(i['value']))
                 time_list.append(i['dateTime'])
-            heartdf = ({'Floors':val_list,'Time':time_list})
+            floorsdf = ({'Floors':val_list,'Time':time_list})
         else:
             fit_statsHR = self.client.intraday_time_series('activities/floors', base_date=start_date, detail_level=descriptor)
 
@@ -235,6 +235,70 @@ class DataManager():
             for i in fit_statsHR['activities-floors-intraday']['dataset']:
                 val_list.append(float(i['value']))
                 time_list.append(i['time'])
-            heartdf = ({'Floors':val_list,'Time':time_list})
+            floorsdf = ({'Floors':val_list,'Time':time_list})
+
+        return floorsdf
+
+    def get_sleep_data(self, start_date):
+        '''
+        get_sleep_data
+        :param start_date: required, specifies date for sleep data 
+                        to be gathered from
+        :return: the time series data
+        '''
+        date = datetime.strptime(start_date, "%Y-%m-%d")
+        fit_statsHR = self.client.get_sleep(date)
+        
+        time_list = []
+        val_list = []
+        for i in fit_statsHR['sleep'][0]['minuteData']:
+            val_list.append(float(i['value']))
+            time_list.append(i['dateTime'])
+        sleepdf = ({'Sleep':val_list,'Time':time_list})
+
+        return sleepdf
+
+    def get_extra_sleep_data(self, start_date):
+        '''
+        get_extra_sleep_data
+        :param start_date: required, specifies date for sleep data 
+                        to be gathered from
+        :return: the extra sleep data
+        '''
+        date = datetime.strptime(start_date, "%Y-%m-%d")
+        fit_statsHR = self.client.get_sleep(date)
+        
+        del fit_statsHR['sleep'][0]['minuteData']
+        sleepdf = ({'sleep':fit_statsHR['sleep'][0],'summary':fit_statsHR['summary']})
+
+        return sleepdf
+
+    def get_heart_rate_data(self, start_date, descriptor):
+        '''
+        get_heart_rate_data
+        :param start_date: required, specifies date for sleep data 
+                        to be gathered from
+        :return: the time series data
+        '''
+        # Check if descriptor is date format
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
+        if(r.match(descriptor)):
+            fit_statsHR = self.client.time_series('activities/heart', base_date=start_date, end_date=descriptor)
+            
+            time_list = []
+            val_list = []
+            for i in fit_statsHR['activities-heart']:
+                val_list.append(i['value'])
+                time_list.append(i['dateTime'])
+            heartdf = ({'Heart Info':val_list,'Time':time_list})
+        else:    
+            fit_statsHR = self.client.intraday_time_series('activities/heart', base_date=start_date, detail_level=descriptor)
+            
+            time_list = []
+            val_list = []
+            for i in fit_statsHR['activities-heart-intraday']['dataset']:
+                val_list.append(float(i['value']))
+                time_list.append(i['time'])
+            heartdf = ({'Heart Rate':val_list,'Time':time_list})
 
         return heartdf
