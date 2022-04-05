@@ -1,12 +1,13 @@
 import plotly.graph_objects as go
 import dash
+import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 
 from .widget_interface import WidgetInterface
 
 class RadarChartWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name='Radar Chart'):
+    def __init__(self, data_manager, data_type, start_date, end_date, name):
         super().__init__(data_manager, data_type, start_date, end_date, name)
 
     def render(self):
@@ -28,6 +29,7 @@ class RadarChartWidget(WidgetInterface):
           showlegend=False
         )
 
-        return html.Div([
+        return html.Div(children=[
+            dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
         ])

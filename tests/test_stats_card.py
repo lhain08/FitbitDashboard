@@ -22,7 +22,7 @@ class TestStatsCard:
 
         # Check database call is correct
         assert self.mock_data_manager.get_data.called_with('Steps', '2022-04-01', '2022-04-04')
-
+        
         # Verify the output content
         assert type(widget_output) == dbc.Card
         assert len(widget_output.children) == 2
