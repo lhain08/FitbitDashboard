@@ -31,14 +31,14 @@ class StatsCardWidget(WidgetInterface):
             body = html.Div([
                 html.H3(f"Total {self.data_type}", style={'text-align': 'center'}),
                 html.H4(f"{total:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
+                        style={'text-align': 'center'}, id='total'),
                 html.H3(f"Average Active 15 Minute Interval", style={'text-align': 'center'}),
                 html.H4(f"{avg_interval:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
+                        style={'text-align': 'center'}, id='average'),
                 html.H3(f"Peak 15 Minute Interval", style={'text-align': 'center'}),
                 html.H4(f"{max_value:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
-                html.H4(max_time, style={'text-align': 'center'})
+                        style={'text-align': 'center'}, id='max-value'),
+                html.H4(max_time, style={'text-align': 'center'}, id='max-time')
             ])
         else:
             total = sum(values)
@@ -51,14 +51,14 @@ class StatsCardWidget(WidgetInterface):
             body = html.Div([
                 html.H3(f"Total {self.data_type}", style={'text-align': 'center'}),
                 html.H4(f"{total:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
+                        style={'text-align': 'center'}, id='total'),
                 html.H3(f"Average {self.data_type}", style={'text-align': 'center'}),
                 html.H4(f"{avg:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
+                        style={'text-align': 'center'}, id='average'),
                 html.H3(f"Max {self.data_type} Per Day", style={'text-align': 'center'}),
                 html.H4(f"{max_value:.3f}".rstrip('0').rstrip('.') + f" {Constants.UNITS[self.data_type]}",
-                        style={'text-align': 'center'}),
-                html.H4(max_date.strftime("%b %d %Y"), style={'text-align': 'center'})
+                        style={'text-align': 'center'}, id='max-value'),
+                html.H4(max_date.strftime("%b %d %Y"), style={'text-align': 'center'}, id='max-date')
             ])
 
         return dbc.Card([
