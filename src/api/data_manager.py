@@ -272,3 +272,25 @@ class DataManager():
         heartdf = ({'sleep':fit_statsHR['sleep'][0],'summary':fit_statsHR['summary']})
 
         return heartdf
+
+    def get_heart_rate_data(self, start_date, descriptor):
+        '''
+        get_heart_rate_data
+        :param start_date: required, specifies date for sleep data 
+                        to be gathered from
+        :return: the time series data
+        '''
+        # Check if descriptor is date format
+        r = re.compile(r'\d{4}-\d{2}-\d{2}')
+        if(r.match(descriptor)):
+            fit_statsHR = self.client.time_series('activities/heart', base_date=start_date, end_date=descriptor)
+        else:    
+            fit_statsHR = self.client.intraday_time_series('activities/heart', base_date=start_date, detail_level=descriptor)
+            time_list = []
+            val_list = []
+            for i in fit_statsHR['activities-heart-intraday']['dataset']:
+                val_list.append(float(i['value']))
+                time_list.append(i['time'])
+            heartdf = ({'Heart Rate':val_list,'Time':time_list})
+
+        return heartdf
