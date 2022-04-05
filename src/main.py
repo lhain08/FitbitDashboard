@@ -12,6 +12,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 # Create data manager and app builder
 dm = DataManager()
+dm.get_sleep_data("2019-07-01")
 builder = AppBuilder(app, dm)
 
 app.title = "Fitbit Dashboard"

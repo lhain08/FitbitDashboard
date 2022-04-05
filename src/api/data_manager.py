@@ -1,6 +1,6 @@
 """Data Manager Module: Responsible for app's interactions with database/api"""
 import re
-import datetime
+from datetime import datetime
 from fitbit import exceptions
 
 import api.connect as connect
@@ -238,3 +238,42 @@ class DataManager():
             heartdf = ({'Floors':val_list,'Time':time_list})
 
         return heartdf
+
+    def get_sleep_data(self, start_date):
+        '''
+        get_sleep_data
+        :param start_date: required, specifies start date for date range or date
+                           for intraday requests
+        :param descriptor: can be either end_date or period depending on users input
+                            end_date for daily values period for specific values throughout day
+        :end_date: optional, when specified gets a range of data from start
+                         date to end date
+        :period: time increments for intraday data, defaults to 15min.
+                       Can also be 1sec or 1min.
+        :return: the time series data
+        '''
+        # Check if descriptor is date format
+        # r = re.compile(r'\d{4}-\d{2}-\d{2}')
+        # if(r.match(descriptor)):
+        #     fit_statsHR = self.client.time_series('activities/sleep', base_date=start_date, end_date=descriptor)
+
+        #     time_list = []
+        #     val_list = []
+        #     for i in fit_statsHR['activities-sleep']:
+        #         val_list.append(float(i['value']))
+        #         time_list.append(i['dateTime'])
+        #     heartdf = ({'Sleep':val_list,'Time':time_list})
+        # else:
+        #     fit_statsHR = self.client.intraday_time_series('activities/sleep', base_date=start_date, detail_level=descriptor)
+
+        #     time_list = []
+        #     val_list = []
+        #     for i in fit_statsHR['activities-sleep-intraday']['dataset']:
+        #         val_list.append(float(i['value']))
+        #         time_list.append(i['time'])
+        #     heartdf = ({'Sleep':val_list,'Time':time_list})
+        date = datetime.strptime(start_date, "%Y-%m-%d")
+        fit_statsHR  = self.client.get_sleep(date)
+        print(self.client.activities_list())
+
+        return fit_statsHR
