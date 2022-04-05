@@ -46,7 +46,9 @@ class WidgetModal():
                         min_date_allowed=date(1950, 1, 1),
                         max_date_allowed=date(2027, 4, 27),
                         initial_visible_month=date(2022, 4, 4),
-                    )
+                    ), html.Br(), html.Br(),
+                    dbc.Label("Type a name for your widget", html_for="widget-name"), html.Br(),
+                    dbc.Input(id="widget-name", placeholder="widget A", type="text")
                 ])),
                 dbc.ModalFooter(
                     dbc.Button(
@@ -62,10 +64,11 @@ class WidgetModal():
                        Output("content-wrapper", "children")],
                       [trigger, Input("submit", "n_clicks"), Input("dashboard-selection", "value"),
                        Input('chart-type', 'value'), Input('datatype-selection', 'value'),
-                       Input('time-period', 'start_date'), Input('time-period', 'end_date')],
+                       Input('time-period', 'start_date'), Input('time-period', 'end_date'),
+                       Input('widget-name', 'value')],
                       State("modal", "is_open"),
                       suppress_callback_exceptions=True, prevent_initial_call=True)
-        def toggle_modal(open, submit, dashboard, chart_type, data_type, start_date, end_date, is_open):
+        def toggle_modal(open, submit, dashboard, chart_type, data_type, start_date, end_date, widget_name, is_open):
             changed_id = [p['prop_id'] for p in callback_context.triggered][0]
             # If the widget is not opened but the open button was pressed, open the widget modal
             if open and not is_open:
@@ -76,7 +79,7 @@ class WidgetModal():
             # If submit was pressed, create a widget from the selected input
             elif 'submit' in changed_id:
                 tabs.dashboards[dashboard].widgets.append(
-                    self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date)
+                    self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date, widget_name)
                 )
                 return not is_open, dash.no_update, tabs.render_content()
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
