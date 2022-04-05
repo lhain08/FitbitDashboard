@@ -284,9 +284,16 @@ class DataManager():
         r = re.compile(r'\d{4}-\d{2}-\d{2}')
         if(r.match(descriptor)):
             fit_statsHR = self.client.time_series('activities/heart', base_date=start_date, end_date=descriptor)
-            heartdf = fit_statsHR
+            
+            time_list = []
+            val_list = []
+            for i in fit_statsHR['activities-heart']:
+                val_list.append(i['value'])
+                time_list.append(i['dateTime'])
+            heartdf = ({'Heart Info':val_list,'Time':time_list})
         else:    
             fit_statsHR = self.client.intraday_time_series('activities/heart', base_date=start_date, detail_level=descriptor)
+            
             time_list = []
             val_list = []
             for i in fit_statsHR['activities-heart-intraday']['dataset']:
