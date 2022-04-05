@@ -29,6 +29,8 @@ class RadarChartWidget(WidgetInterface):
           showlegend=False
         )
 
+        fig.update_layout(title = "Goal Progress")
+
         return html.Div(children=[
             dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
