@@ -257,3 +257,18 @@ class DataManager():
         heartdf = ({'Sleep':val_list,'Time':time_list})
 
         return heartdf
+
+    def get_extra_sleep_data(self, start_date):
+        '''
+        get_extra_sleep_data
+        :param start_date: required, specifies date for sleep data 
+                        to be gathered from
+        :return: the extra sleep data
+        '''
+        date = datetime.strptime(start_date, "%Y-%m-%d")
+        fit_statsHR = self.client.get_sleep(date)
+        
+        del fit_statsHR['sleep'][0]['minuteData']
+        heartdf = ({'sleep':fit_statsHR['sleep'][0],'summary':fit_statsHR['summary']})
+
+        return heartdf
