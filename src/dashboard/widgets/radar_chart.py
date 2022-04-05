@@ -5,8 +5,8 @@ from dash import html
 
 from .widget_interface import WidgetInterface
 
-class BarChartWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name='Bar Chart'):
+class RadarChartWidget(WidgetInterface):
+    def __init__(self, data_manager, data_type, start_date, end_date, name='Radar Chart'):
         super().__init__(data_manager, data_type, start_date, end_date, name)
 
     def render(self):
@@ -16,12 +16,17 @@ class BarChartWidget(WidgetInterface):
         x = data['Time']
 
         # Create the chart
-        fig = go.Figure([go.Bar(x=x, y=y)])
+        fig = go.Figure([go.Scatterpolar(
+            r=[2, 2, 3, 5, 4],
+            theta=['Steps','Distance','Calories',
+                   'Elevation', 'Floors'],
+            fill='toself')])
 
-        # To be used in the future
-        # fig.update_layout(legend_title_text = "Activity")
-        # fig.update_xaxes(title_text="Time")
-        # fig.update_yaxes(title_text="Data Type")
+        fig.update_layout(
+          polar=dict( radialaxis=dict(visible=True),
+          ),
+          showlegend=False
+        )
 
         return html.Div([
             dcc.Graph(figure=fig)
