@@ -12,7 +12,7 @@ class TestStatsCard:
 
     def test_stats_card_date_range(self):
         #stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Stats Card')
-        ''''
+        """
         self.mock_data_manager.get_data.return_value = {
             'Time': ['2022-04-01', '2022-04-02', '2022-04-03'],
             'Steps': [1000, 2000, 3000]
@@ -36,12 +36,12 @@ class TestStatsCard:
         assert body_data['average'].split() == ['2000', 'Steps']
         assert body_data['max-value'].split() == ['3000', 'Steps']
         assert body_data['max-date'] == 'Apr 03 2022'
-        ''''
+        """
 
     def test_stats_card_intraday(self):
 
         #stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Distance', '2022-04-04', '2022-04-04', 'Test Stats Card')
-        ''''
+        """
         self.mock_data_manager.get_data.return_value = {
             'Time': ['05:00:00', '05:15:00', '05:30:00', '05:45:00'],
             'Distance': [0.5, 0.1, 0.4, 0.0]
@@ -65,4 +65,4 @@ class TestStatsCard:
         assert body_data['average'].split() == ['0.333', 'Miles']
         assert body_data['max-value'].split() == ['0.5', 'Miles']
         assert body_data['max-time'] == '05:00:00'
-        ''''
+        """
