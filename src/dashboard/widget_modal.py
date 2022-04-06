@@ -7,6 +7,7 @@ from .widgets.line_chart import LineChartWidget
 from .widgets.stats_card import StatsCardWidget
 from .widgets.scatter_plot import ScatterPlotWidget
 from .widgets.radar_chart import RadarChartWidget
+from .widgets.gauge_chart import GaugeChartWidget
 
 class WidgetModal():
     def __init__(self, my_id, trigger, tabs, app, data_manager):
@@ -17,7 +18,7 @@ class WidgetModal():
         self.data_manager = data_manager
         self.chart_types = {'Line Chart': LineChartWidget, 'Bar Chart': BarChartWidget,
                             'Stats Card': StatsCardWidget, 'Scatter Plot': ScatterPlotWidget,
-                            'Radar Chart': RadarChartWidget}
+                            'Radar Chart': RadarChartWidget, 'Gauge Chart': GaugeChartWidget}
 
         dashboard_list = [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in tabs.dashboards.values()]
 
