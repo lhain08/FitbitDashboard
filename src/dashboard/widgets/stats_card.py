@@ -8,8 +8,8 @@ from .widget_interface import WidgetInterface
 
 
 class StatsCardWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name='Stats Card'):
-        super().__init__(data_manager, data_type, start_date, end_date, name=name)
+    def __init__(self, data_manager, data_type, start_date, end_date, name='Stats Card', goal=0):
+        super().__init__(data_manager, data_type, start_date, end_date, name=name, goal=goal)
 
     def render(self):
         # Get the data first

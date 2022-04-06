@@ -12,7 +12,7 @@ class TestBarChartWidget:
     mock_data_manager = Mock()
 
     def test_bar_chart(self):
-        bar_chart_under_test = BarChartWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Bar Chart')
+        bar_chart_under_test = BarChartWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Bar Chart', 0)
 
         self.mock_data_manager.get_data.return_value = {
             'Time': ['2022-04-01', '2022-04-02', '2022-04-03'],

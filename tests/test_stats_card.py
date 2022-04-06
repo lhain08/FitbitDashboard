@@ -11,7 +11,7 @@ class TestStatsCard:
     mock_data_manager = Mock()
 
     def test_stats_card_date_range(self):
-        stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Stats Card')
+        stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Stats Card', 0)
 
         self.mock_data_manager.get_data.return_value = {
             'Time': ['2022-04-01', '2022-04-02', '2022-04-03'],
@@ -22,7 +22,7 @@ class TestStatsCard:
 
         # Check database call is correct
         assert self.mock_data_manager.get_data.called_with('Steps', '2022-04-01', '2022-04-04')
-        
+
         # Verify the output content
         assert type(widget_output) == dbc.Card
         assert len(widget_output.children) == 2
@@ -38,7 +38,7 @@ class TestStatsCard:
         assert body_data['max-date'] == 'Apr 03 2022'
 
     def test_stats_card_intraday(self):
-        stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Distance', '2022-04-04', '2022-04-04', 'Test Stats Card')
+        stats_card_under_test = StatsCardWidget(self.mock_data_manager, 'Distance', '2022-04-04', '2022-04-04', 'Test Stats Card', 0)
 
         self.mock_data_manager.get_data.return_value = {
             'Time': ['05:00:00', '05:15:00', '05:30:00', '05:45:00'],
