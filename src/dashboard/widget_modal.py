@@ -56,7 +56,21 @@ class WidgetModal():
                         initial_visible_month=date(2022, 4, 4),
                     ), html.Br(), html.Br(),
                     dbc.Label("Type a name for your widget", html_for="widget-name"), html.Br(),
-                    dbc.Input(id="widget-name", placeholder="widget A", type="text")
+                    dbc.Input(id="widget-name", placeholder="widget A", type="text"), html.Br(),
+                    dbc.Label("Set a goal (optional)", html_for="goal-set"), html.Br(),
+                    dcc.Slider(0, 1000, 1,
+                        id='goal-set',
+                        tooltip={"placement": "bottom", "always_visible": True},
+                        marks={
+                            0: {'label': '0'},
+                            250: {'label': '250'},
+                            500: {'label': '500'},
+                            750: {'label': '750'},
+                            1000: {'label': '1000'}
+                        },
+                        value=0,
+                        updatemode='drag'
+                    )
                 ])),
                 dbc.ModalFooter(
                     dbc.Button(
@@ -73,10 +87,10 @@ class WidgetModal():
                       [trigger, Input("submit", "n_clicks"), Input("dashboard-selection", "value"),
                        Input('chart-type', 'value'), Input('datatype-selection', 'value'),
                        Input('time-period', 'start_date'), Input('time-period', 'end_date'),
-                       Input('widget-name', 'value')],
+                       Input('widget-name', 'value'), Input('goal-set', 'value')],
                       State("modal", "is_open"),
                       suppress_callback_exceptions=True, prevent_initial_call=True)
-        def toggle_modal(open, submit, dashboard, chart_type, data_type, start_date, end_date, widget_name, is_open):
+        def toggle_modal(open, submit, dashboard, chart_type, data_type, start_date, end_date, widget_name, goal, is_open):
             changed_id = [p['prop_id'] for p in callback_context.triggered][0]
             # If the widget is not opened but the open button was pressed, open the widget modal
             if open and not is_open:
@@ -90,7 +104,7 @@ class WidgetModal():
                     return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
                    dash.no_update, True
                 tabs.dashboards[dashboard].widgets.append(
-                    self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date, widget_name)
+                    self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date, widget_name, goal)
                 )
                 return not is_open, dash.no_update, tabs.render_content(), False
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page

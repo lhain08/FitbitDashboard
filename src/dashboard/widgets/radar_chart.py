@@ -8,8 +8,8 @@ from datetime import datetime
 from .widget_interface import WidgetInterface
 
 class RadarChartWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name):
-        super().__init__(data_manager, data_type, start_date, end_date, name)
+    def __init__(self, data_manager, data_type, start_date, end_date, name, goal):
+        super().__init__(data_manager, data_type, start_date, end_date, name, goal)
 
     def render(self):
         # Get the data first
