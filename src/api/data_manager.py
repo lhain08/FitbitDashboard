@@ -16,16 +16,16 @@ class DataManager():
         if self.client is None:
             self.client = connect.get_client()
 
-    '''
-    get_data - used for getting all types of data from one function
-    :param data_type: required, specifies the desired resource
-    :param start_date: required, specifies start date for date range or date for
-                        intraday requests
-    :param end_date: optional, when specified gets a range of data from start date
-                        to end date
-    :return: the time series data
-    '''
     def get_data(self, data_type, start_date, end_date):
+        '''
+        get_data - used for getting all types of data from one function
+        :param data_type: required, specifies the desired resource
+        :param start_date: required, specifies start date for date range or date for
+                            intraday requests
+        :param end_date: optional, when specified gets a range of data from start date
+                            to end date
+        :return: the time series data
+        '''
         method = None
         if data_type == 'Steps':
             method = self.get_steps_data
