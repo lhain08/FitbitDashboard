@@ -37,7 +37,7 @@ class GaugeChartWidget(WidgetInterface):
                                               gauge = {'axis': {'range': [None, self.goal + 50]},
                                                      'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': self.goal}}))
 
-        return html.Div(children=[
+        return html.Div(style={'width': '50%', 'padding': '1.5em', 'display': 'inline-block'}, children=[
             dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
         ])

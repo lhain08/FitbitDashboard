@@ -61,7 +61,9 @@ class StatsCardWidget(WidgetInterface):
                 html.H4(max_date.strftime("%b %d %Y"), style={'text-align': 'center'}, id='max-date')
             ])
 
-        return dbc.Card([
+        stats_card = dbc.Card(children = [
             dbc.CardHeader(html.H4(self.name)),
             dbc.CardBody(body)
         ])
+
+        return html.Div(style={'width': '50%', 'padding': '1.5em', 'float': 'left', 'display': 'inline-block'}, children = [stats_card])

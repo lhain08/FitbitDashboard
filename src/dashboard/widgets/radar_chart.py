@@ -42,7 +42,7 @@ class RadarChartWidget(WidgetInterface):
 
         fig.update_layout(title = "Goal Progress")
 
-        return html.Div(children=[
+        return html.Div(style={'width': '50%', 'padding': '1.5em', 'display': 'inline-block'}, children=[
             dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
         ])
