@@ -23,7 +23,7 @@ class ScatterPlotWidget(WidgetInterface):
         fig.update_xaxes(title_text="Time")
         fig.update_yaxes(title_text=str(self.data_type))
 
-        return html.Div(children=[
+        return html.Div(style={'width': '50%', 'padding': '1.5em', 'display': 'inline-block'}, children = [
             dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
         ])

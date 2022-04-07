@@ -24,13 +24,13 @@ class TestStatsCard:
         assert self.mock_data_manager.get_data.called_with('Steps', '2022-04-01', '2022-04-04')
 
         # Verify the output content
-        assert type(widget_output) == dbc.Card
-        assert len(widget_output.children) == 2
-        header = widget_output.children[0]
+        assert type(widget_output) == html.Div
+        assert len(widget_output.children) == 1
+        header = widget_output.children[0].children[0]
         assert type(header) == dbc.CardHeader
         assert type(header.children) == html.H4
         assert header.children.children == 'Test Stats Card'
-        body = widget_output.children[1].children.children
+        body = widget_output.children[0].children[1].children.children
         body_data = {x.id:x.children for x in body if hasattr(x, 'id')}
         assert body_data['total'].split() == ['6000', 'Steps']
         assert body_data['average'].split() == ['2000', 'Steps']
@@ -51,13 +51,13 @@ class TestStatsCard:
         assert self.mock_data_manager.get_data.called_with('Distance', '2022-04-04', '15min')
 
         # Verify the output content
-        assert type(widget_output) == dbc.Card
-        assert len(widget_output.children) == 2
-        header = widget_output.children[0]
+        assert type(widget_output) == html.Div
+        assert len(widget_output.children) == 1
+        header = widget_output.children[0].children[0]
         assert type(header) == dbc.CardHeader
         assert type(header.children) == html.H4
         assert header.children.children == 'Test Stats Card'
-        body = widget_output.children[1].children.children
+        body = widget_output.children[0].children[1].children.children
         body_data = {x.id:x.children for x in body if hasattr(x, 'id')}
         assert body_data['total'].split() == ['1', 'Miles']
         assert body_data['average'].split() == ['0.333', 'Miles']

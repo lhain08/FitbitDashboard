@@ -19,11 +19,12 @@ class BarChartWidget(WidgetInterface):
         # Create the chart
         fig = go.Figure([go.Bar(x=x, y=y)])
 
-        fig.update_layout(title = str(self.data_type) + " Progress")
+        # To be used in the future
+        fig.update_layout(legend_title_text = "Activity")
         fig.update_xaxes(title_text="Time")
-        fig.update_yaxes(title_text=str(self.data_type))
-
-        return html.Div(children=[
+        fig.update_yaxes(title_text="Data Type")
+        
+        return html.Div(style={'width': '50%', 'padding': '1.5em', 'display': 'inline-block'}, children = [
             dbc.Card("Widget: " + self.name, body=True),
             dcc.Graph(figure=fig)
         ])
