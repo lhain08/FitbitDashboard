@@ -51,7 +51,7 @@ class TestStatsCard:
         assert self.mock_data_manager.get_data.called_with('Distance', '2022-04-04', '15min')
 
         # Verify the output content
-        assert type(widget_output) == dbc.Card
+        assert type(widget_output) == html.Div
         assert len(widget_output.children) == 2
         header = widget_output.children[0]
         assert type(header) == dbc.CardHeader
