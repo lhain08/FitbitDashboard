@@ -22,7 +22,7 @@ class BarChartWidget(WidgetInterface):
         # To be used in the future
         fig.update_layout(legend_title_text = "Activity")
         fig.update_xaxes(title_text="Time")
-        fig.update_yaxes(title_text="Data Type")
+        fig.update_yaxes(title_text=self.data_type)
         
         return html.Div(style={'width': '50%', 'padding': '1.5em', 'display': 'inline-block'}, children = [
             dbc.Card("Widget: " + self.name, body=True),
