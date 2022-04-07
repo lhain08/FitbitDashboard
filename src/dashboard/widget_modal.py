@@ -1,3 +1,4 @@
+from unicodedata import name
 from dash import Input, Output, State, html, dcc, callback_context
 from datetime import date
 import dash
@@ -25,7 +26,7 @@ class WidgetModal():
         self.content = dbc.Modal(
             [
                 dbc.Alert(
-                    "Error: Please specify a date range",
+                    "Error: Please fill out all fields",
                     id="alert-auto",
                     is_open=False,
                     duration=4000,
@@ -100,7 +101,7 @@ class WidgetModal():
                        dash.no_update, False
             # If submit was pressed, create a widget from the selected input
             elif 'submit' in changed_id:
-                if start_date is None or end_date is None:
+                if start_date is None or end_date is None or widget_name is None:
                     return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
                    dash.no_update, True
                 tabs.dashboards[dashboard].widgets.append(
