@@ -92,7 +92,7 @@ class DashboardModal:
                             True,
                         )
                 print("added: ", dashboard_name)
-                return not is_open, self.tabs.new_tab(dashboard_name), self.tabs.tabs.children, False,
+                return not is_open, self.tabs.new_tab(dashboard_name), self.tabs.tabs.children, False
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
             return (
                 is_open,
