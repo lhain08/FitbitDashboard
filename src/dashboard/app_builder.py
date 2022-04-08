@@ -2,6 +2,7 @@ from dash import Input, html
 from .navbar import Navbar
 from .tabbing import DashboardTabs
 from .widget_modal import WidgetModal
+from .dashboard_modal import DashboardModal
 
 
 class AppBuilder():
@@ -10,6 +11,7 @@ class AppBuilder():
         self.app = app
         self.data_manager = data_manager
         self.tabs = DashboardTabs(self.app)
+        self.dashmodal = DashboardModal("dashmodal", Input("example-button", "n_clicks"), self.tabs, self.app, self.data_manager)
         self.modal = WidgetModal("modal", Input("new-widget", "n_clicks"), self.tabs, self.app, self.data_manager)
         self.navbar = Navbar(self.app, self.tabs, self.modal)
 
