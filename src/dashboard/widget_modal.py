@@ -58,11 +58,11 @@ class WidgetModal:
                             html.Br(),
                             dbc.Label("Select your chart type", html_for="chart-type"),
                             html.Br(),
-                            dcc.RadioItems(
-                                list(self.chart_types.keys()),
-                                list(self.chart_types.keys())[0],
-                                labelStyle={"display": "block"},
-                                id="chart-type",
+                            dcc.Dropdown(
+                                style={"color": "black"},
+                                options=list(self.chart_types.keys()),
+                                value=list(self.chart_types.keys())[0],
+                                id="chart-type"
                             ),
                             html.Br(),
                             dbc.Label(
