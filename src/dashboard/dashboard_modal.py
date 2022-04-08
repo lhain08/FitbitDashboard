@@ -25,17 +25,22 @@ class DashboardModal:
                     html.Div(
                         children=[
                             dbc.Label(
-                                "Type a name for your dashboard", html_for="dashboard-name"
+                                "Type a name for your dashboard",
+                                html_for="dashboard-name",
                             ),
                             html.Br(),
                             dbc.Input(
-                                id="dashboard-name", placeholder="Dashboard",  type="text"
+                                id="dashboard-name",
+                                placeholder="Dashboard",
+                                type="text",
                             ),
                         ]
                     )
                 ),
                 dbc.ModalFooter(
-                    dbc.Button("Submit", id="dashboard-submit", className="ms-auto", n_clicks=0)
+                    dbc.Button(
+                        "Submit", id="dashboard-submit", className="ms-auto", n_clicks=0
+                    )
                 ),
             ],
             id=self.my_id,
@@ -89,7 +94,12 @@ class DashboardModal:
                             dash.no_update,
                             True,
                         )
-                return not is_open, self.tabs.new_tab(dashboard_name), self.tabs.tabs.children, False,
+                return (
+                    not is_open,
+                    self.tabs.new_tab(dashboard_name),
+                    self.tabs.tabs.children,
+                    False,
+                )
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
             return (
                 is_open,

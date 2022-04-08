@@ -14,8 +14,20 @@ class AppBuilder:
         self.data_manager = data_manager
         self.tabs = DashboardTabs(self.app)
 
-        self.dashmodal = DashboardModal("dashmodal", Input("new-dashboard", "n_clicks"), self.tabs, self.app, self.data_manager)
-        self.modal = WidgetModal("modal", Input("new-widget", "n_clicks"), self.tabs, self.app, self.data_manager)
+        self.dashmodal = DashboardModal(
+            "dashmodal",
+            Input("new-dashboard", "n_clicks"),
+            self.tabs,
+            self.app,
+            self.data_manager,
+        )
+        self.modal = WidgetModal(
+            "modal",
+            Input("new-widget", "n_clicks"),
+            self.tabs,
+            self.app,
+            self.data_manager,
+        )
 
         self.navbar = Navbar(self.app, self.tabs, self.modal, self.dashmodal)
 

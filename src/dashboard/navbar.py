@@ -9,12 +9,11 @@ class Navbar:
             id=self.navid,
             children=[
                 dbc.NavItem(dbc.Button("New Widget", id="new-widget", n_clicks=0)),
-
                 dbc.NavItem(
                     dbc.Button("New Dashboard", id="new-dashboard", n_clicks=0)
                 ),
                 modal.render(),
-                dashmodal.render()
+                dashmodal.render(),
             ],
             brand="Fitbit Dashboard",
             brand_href="#",

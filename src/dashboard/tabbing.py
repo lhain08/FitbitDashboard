@@ -79,9 +79,7 @@ class DashboardTabs:
         else:
             tab = dbc.Tab(label=name, tab_id=tab_id)
             self.tabs.children.append(tab)
-            self.dashboards[tab_id] = Dashboard(
-                self.app, tab, name
-            )
+            self.dashboards[tab_id] = Dashboard(self.app, tab, name)
         return tab_id
 
     def render_content(self, tab_id=None):
