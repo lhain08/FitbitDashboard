@@ -3,7 +3,7 @@ from dash import Input, Output
 
 
 class Navbar:
-    def __init__(self, app, tabs, modal, dashmodal, navid="navbar"):
+    def __init__(self, tabs, modal, dashmodal, navid="navbar"):
         self.navid = navid
         self.tabs = tabs
         self.navbar = dbc.NavbarSimple(
