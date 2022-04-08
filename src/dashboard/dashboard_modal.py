@@ -83,9 +83,8 @@ class DashboardModal:
                     {"label": d.dashid, "value": d.parent_tab.tab_id}
                     for d in tabs.dashboards.values()
                 ]
-                for dict in dashboard_list:
-                    print(dict["label"])
-                    if dashboard_name == dict["label"]:
+                for name in dashboard_list:
+                    if dashboard_name == name["label"]:
                         return (
                             is_open,
                             dash.no_update,
