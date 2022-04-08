@@ -42,7 +42,7 @@ class DashboardTabs:
         self.active_tab = None
 
         # Create first tab
-        self.new_tab()
+        self.new_tab("Dashboard 1")
 
         @app.callback(
             Output("content", "children"),
@@ -58,7 +58,7 @@ class DashboardTabs:
             return self.dashboards[tab_id].render()
         return self.dashboards[self.active_tab].render()
 
-    def new_tab(self):
+    def new_tab(self, name):
         """
         Callback for switching tabs - used to recognize when user has selected "NEW TAB" tab,
         generates a new tab/dashboard, and sets the new tab as the active tab. Also renders
@@ -70,11 +70,16 @@ class DashboardTabs:
         self.tab_index += 1
         tab_id = f"tab-{self.tab_index}"
         tab_count = len(self.tabs.children)
-        tab = dbc.Tab(label=f"Dashboard {tab_count+1}", tab_id=tab_id)
-        self.tabs.children.append(tab)
-        self.dashboards[tab_id] = Dashboard(
-            self.app, tab, f"dashboard-{self.tab_index}"
-        )
+        if name is None:
+            tab = dbc.Tab(label=f"Dashboard {tab_count+1}", tab_id=tab_id)
+            self.tabs.children.append(tab)
+            self.dashboards[tab_id] = Dashboard(
+                self.app, tab, f"Dashboard {self.tab_index}"
+            )
+        else:
+            tab = dbc.Tab(label=name, tab_id=tab_id)
+            self.tabs.children.append(tab)
+            self.dashboards[tab_id] = Dashboard(self.app, tab, name)
         return tab_id
 
     def render_content(self, tab_id=None):

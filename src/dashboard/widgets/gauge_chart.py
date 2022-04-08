@@ -14,8 +14,8 @@ class GaugeChartWidget(WidgetInterface):
         data = self.data_manager.get_data(
             self.data_type, self.start_date, self.end_date
         )
-        data[self.data_type]
-        data["Time"]
+        # data[self.data_type]
+        # data["Time"]
 
         # Create the chart
         if self.goal == 0:
