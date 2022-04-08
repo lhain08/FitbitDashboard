@@ -94,7 +94,6 @@ class DashboardModal:
                             dash.no_update,
                             True,
                         )
-                print("added: ", dashboard_name)
                 return (
                     not is_open,
                     self.tabs.new_tab(dashboard_name),
