@@ -2,7 +2,7 @@ from datetime import date
 
 import dash
 import dash_bootstrap_components as dbc
-from dash import Input, Output, State, callback_context, dcc, html
+from dash import Input, Output, State, callback_context, html
 
 
 class DashboardModal:
