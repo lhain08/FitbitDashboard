@@ -1,7 +1,7 @@
 autoflake==1.4
 black==22.3.0
 dash==2.3.0
-isort==5.10.1
+isort==4.3.21
 flake8==4.0.1
 fitbit==0.3.1
 dash-bootstrap-components==1.0.3

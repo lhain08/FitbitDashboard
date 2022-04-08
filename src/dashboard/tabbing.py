@@ -1,11 +1,11 @@
 """Tabbing Module for tracking all current Tabs/Dashboards"""
-from dash import html, Input, Output
 import dash_bootstrap_components as dbc
+from dash import Input, Output, html
 
 from .dashboard import Dashboard
 
 
-class DashboardTabs():
+class DashboardTabs:
     """
     A class for all tabs in the Dashboard App
     ...
@@ -31,6 +31,7 @@ class DashboardTabs():
     render():
         renders the tabs and all child content
     """
+
     def __init__(self, app):
         self.app = app
         self.my_id = "tabs"
@@ -43,8 +44,11 @@ class DashboardTabs():
         # Create first tab
         self.new_tab()
 
-        @app.callback(Output("content", "children"), Input("tabs", "active_tab"),
-                      prevent_initial_call=True)
+        @app.callback(
+            Output("content", "children"),
+            Input("tabs", "active_tab"),
+            prevent_initial_call=True,
+        )
         def switch_tab(active_tab):
             self.active_tab = active_tab
             return self.render_tab(active_tab)
@@ -55,20 +59,22 @@ class DashboardTabs():
         return self.dashboards[self.active_tab].render()
 
     def new_tab(self):
-        '''
+        """
         Callback for switching tabs - used to recognize when user has selected "NEW TAB" tab,
         generates a new tab/dashboard, and sets the new tab as the active tab. Also renders
         dashboards when switching between tabs.
         :param at: the active tab id
         :return: (new active tab id, tab children, content of the new tab)
-        '''
+        """
         # Generate a new tab and switch to this tab
         self.tab_index += 1
         tab_id = f"tab-{self.tab_index}"
         tab_count = len(self.tabs.children)
         tab = dbc.Tab(label=f"Dashboard {tab_count+1}", tab_id=tab_id)
         self.tabs.children.append(tab)
-        self.dashboards[tab_id] = Dashboard(self.app, tab, f"dashboard-{self.tab_index}")
+        self.dashboards[tab_id] = Dashboard(
+            self.app, tab, f"dashboard-{self.tab_index}"
+        )
         return tab_id
 
     def render_content(self, tab_id=None):
@@ -79,15 +85,21 @@ class DashboardTabs():
         """
         if tab_id is None:
             if self.active_tab:
-                return html.Div(id=self.content_id, children=[self.dashboards[self.active_tab].render()])
+                return html.Div(
+                    id=self.content_id,
+                    children=[self.dashboards[self.active_tab].render()],
+                )
             return html.Div(id=self.content_id)
         return html.Div(id=self.content_id, children=[self.dashboards[tab_id].render()])
 
     def render(self):
-        '''
+        """
         Creates the tab div and renders all child dashboards
         :return: The Tab Div
-        '''
-        return html.Div([
-            self.tabs,
-            html.Div(id="content-wrapper", children=[self.render_content()])])
+        """
+        return html.Div(
+            [
+                self.tabs,
+                html.Div(id="content-wrapper", children=[self.render_content()]),
+            ]
+        )

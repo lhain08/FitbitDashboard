@@ -1,8 +1,4 @@
 from unittest.mock import Mock
-import pytest
-from dash import html
-from dash import dcc
-import plotly.graph_objects as go
 
 from src.dashboard.widgets.bar_chart import BarChartWidget
 
@@ -12,17 +8,26 @@ class TestBarChartWidget:
     mock_data_manager = Mock()
 
     def test_bar_chart(self):
-        bar_chart_under_test = BarChartWidget(self.mock_data_manager, 'Steps', '2022-04-01', '2022-04-04', 'Test Bar Chart', 0)
+        bar_chart_under_test = BarChartWidget(
+            self.mock_data_manager,
+            "Steps",
+            "2022-04-01",
+            "2022-04-04",
+            "Test Bar Chart",
+            0,
+        )
 
         self.mock_data_manager.get_data.return_value = {
-            'Time': ['2022-04-01', '2022-04-02', '2022-04-03'],
-            'Steps': [1000, 2000, 3000]
+            "Time": ["2022-04-01", "2022-04-02", "2022-04-03"],
+            "Steps": [1000, 2000, 3000],
         }
 
-        widget_output = bar_chart_under_test.render()
+        bar_chart_under_test.render()
 
         # Check database call is correct
-        assert self.mock_data_manager.get_data.called_with('Steps', '2022-04-01', '2022-04-04')
+        assert self.mock_data_manager.get_data.called_with(
+            "Steps", "2022-04-01", "2022-04-04"
+        )
 
         # Verify the output content
 
