@@ -19,5 +19,8 @@ jobs:
       - name: Install Dependencies
         run: pip install -r src/requirements.txt -r tests/requirements.txt
 
+      - name: Run Linter
+        run: make lint
+
       - name: Run Unit Tests
         run: pytest

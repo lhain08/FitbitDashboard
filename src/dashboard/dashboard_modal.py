@@ -1,10 +1,11 @@
-from unicodedata import name
-from dash import Input, Output, State, html, dcc, callback_context
 from datetime import date
+
 import dash
 import dash_bootstrap_components as dbc
+from dash import Input, Output, State, callback_context, dcc, html
 
-class DashboardModal():
+
+class DashboardModal:
     def __init__(self, my_id, trigger, tabs, app, data_manager):
         self.my_id = my_id
         self.trigger = trigger
@@ -12,79 +13,94 @@ class DashboardModal():
         self.app = app
         self.data_manager = data_manager
 
-        # dashboard_list = [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in tabs.dashboards.values()]
-
-        # self.content = dbc.Modal(
-        #     [
-        #         dbc.Alert(
-        #             "Error: Please fill out all fields",
-        #             id="dash-alert-auto",
-        #             is_open=False,
-        #             duration=4000,
-        #             color="danger"
-        #         ),
-        #         dbc.ModalHeader(dbc.ModalTitle("Create A Dashboard")),
-        #         dbc.ModalBody(html.Div(children=[
-        #             dbc.Label("Type a name for your dashboard", html_for="dashboard-name"), html.Br(),
-        #             dbc.Input(id="dashboard-name", placeholder="dashboard A", type="text"), html.Br(),
-        #         ])),
-        #         dbc.ModalFooter(
-        #             dbc.Button(
-        #                 "Submit", id="dashsubmit", className="ms-auto", n_clicks=0
-        #             )
-        #         ),
-        #     ],
-        #     id=self.my_id,
-        #     is_open=False,
-        # )
-
-        # @app.callback([Output("dashmodal", "is_open"), 
-        #                Output("dash-content-wrapper", "children"), Output("dash-alert-auto", "is_open")],
-        #               [trigger, Input("dashsubmit", "n_clicks"), 
-        #                Input('dashboard-name', 'value')],
-        #               State("dashmodal", "is_open"),
-        #               suppress_callback_exceptions=True, prevent_initial_call=True)
-        # def toggle_modal(open, submit, dashboard_name, is_open):
-        #     changed_id = [p['prop_id'] for p in callback_context.triggered][0]
-        #     # If the widget is not opened but the open button was pressed, open the widget modal
-        #     if open and not is_open:
-        #         # Updates the dashboard list in case user has added new dashboards
-        #         return not is_open,\
-        #                [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
-        #                dash.no_update, False
-        #     # If submit was pressed, create a widget from the selected input
-        #     elif 'submit' in changed_id:
-        #         if start_date is None or end_date is None or widget_name is None:
-        #             return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
-        #            dash.no_update, True
-        #         tabs.dashboards[dashboard].widgets.append(
-        #             self.chart_types[chart_type](self.data_manager, data_type, start_date, end_date, widget_name, goal)
-        #         )
-        #         return not is_open, dash.no_update, tabs.render_content(), False
-        #     # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
-        #     return is_open, [{'label': d.dashid, 'value': d.parent_tab.tab_id} for d in self.tabs.dashboards.values()],\
-        #            dash.no_update, False
-        self.dashcontent = html.Div(
+        self.content = dbc.Modal(
             [
-                dbc.Button(
-                    "Click me", id="example-button", className="me-2", n_clicks=0
+                dbc.Alert(
+                    "Error: There is already a dashboard with that name",
+                    id="dashboard-alert-auto",
+                    is_open=False,
+                    duration=4000,
+                    color="danger",
                 ),
-                html.Span(id="example-output", style={"verticalAlign": "middle"}),
-            ]
+                dbc.ModalHeader(dbc.ModalTitle("Create A Dashboard")),
+                dbc.ModalBody(
+                    html.Div(
+                        children=[
+                            dbc.Label(
+                                "Type a name for your dashboard", html_for="dashboard-name"
+                            ),
+                            html.Br(),
+                            dbc.Input(
+                                id="dashboard-name", placeholder="Dashboard",  type="text"
+                            ),
+                        ]
+                    )
+                ),
+                dbc.ModalFooter(
+                    dbc.Button("Submit", id="dashboard-submit", className="ms-auto", n_clicks=0)
+                ),
+            ],
+            id=self.my_id,
+            is_open=False,
         )
-
 
         @app.callback(
-            Output("example-output", "children"), [Input("example-button", "n_clicks")],
-            suppress_callback_exceptions=True
+            [
+                Output("dashmodal", "is_open"),
+                Output(self.tabs.my_id, "active_tab"),
+                Output(self.tabs.my_id, "children"),
+                Output("dashboard-alert-auto", "is_open"),
+            ],
+            [
+                trigger,
+                Input("dashboard-submit", "n_clicks"),
+                Input("dashboard-name", "value"),
+            ],
+            State("dashmodal", "is_open"),
+            suppress_callback_exceptions=True,
+            prevent_initial_call=True,
         )
-        def on_button_click(n):
-            if n is None:
-                print("CLICKIED")
-                return "Not clicked."
-            else:
-                print("CLICKIED")
-                return f"Clicked {n} times."
+        def toggle_modal(
+            open,
+            submit,
+            dashboard_name,
+            is_open,
+        ):
+            changed_id = [p["prop_id"] for p in callback_context.triggered][0]
+            # If the widget is not opened but the open button was pressed, open the widget modal
+            if open and not is_open:
+                # Updates the dashboard list in case user has added new dashboards
+                return (
+                    not is_open,
+                    dash.no_update,
+                    dash.no_update,
+                    False,
+                )
+            # If submit was pressed, create a widget from the selected input
+            elif "dashboard-submit" in changed_id:
+                # Get list of dashboards
+                dashboard_list = [
+                    {"label": d.dashid, "value": d.parent_tab.tab_id}
+                    for d in tabs.dashboards.values()
+                ]
+                for dict in dashboard_list:
+                    print(dict["label"])
+                    if dashboard_name == dict["label"]:
+                        return (
+                            is_open,
+                            dash.no_update,
+                            dash.no_update,
+                            True,
+                        )
+                print("added: ", dashboard_name)
+                return not is_open, self.tabs.new_tab(dashboard_name), self.tabs.tabs.children, False,
+            # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
+            return (
+                is_open,
+                dash.no_update,
+                dash.no_update,
+                False,
+            )
 
     def render(self):
         return self.content
