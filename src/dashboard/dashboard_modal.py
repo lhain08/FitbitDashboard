@@ -61,14 +61,14 @@ class DashboardModal:
             prevent_initial_call=True,
         )
         def toggle_modal(
-            open,
+            dash_open,
             submit,
             dashboard_name,
             is_open,
         ):
             changed_id = [p["prop_id"] for p in callback_context.triggered][0]
             # If the widget is not opened but the open button was pressed, open the widget modal
-            if open and not is_open:
+            if dash_open and not is_open:
                 # Updates the dashboard list in case user has added new dashboards
                 return (
                     not is_open,
@@ -77,7 +77,7 @@ class DashboardModal:
                     False,
                 )
             # If submit was pressed, create a widget from the selected input
-            elif "dashboard-submit" in changed_id:
+            if "dashboard-submit" in changed_id:
                 # Get list of dashboards
                 dashboard_list = [
                     {"label": d.dashid, "value": d.parent_tab.tab_id}

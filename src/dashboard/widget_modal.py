@@ -179,7 +179,7 @@ class WidgetModal:
                     False,
                 )
             # If submit was pressed, create a widget from the selected input
-            elif "submit" in changed_id:
+            if "submit" in changed_id:
                 if start_date is None or end_date is None or widget_name is None:
                     return (
                         is_open,
