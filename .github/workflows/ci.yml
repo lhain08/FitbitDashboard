@@ -21,6 +21,6 @@ jobs:
 
       - name: Run Linter
         run: make lint
-        
+
       - name: Run Unit Tests
         run: pytest
