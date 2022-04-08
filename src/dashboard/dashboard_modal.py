@@ -1,8 +1,6 @@
-from datetime import date
-
 import dash
 import dash_bootstrap_components as dbc
-from dash import Input, Output, State, callback_context, dcc, html
+from dash import Input, Output, State, callback_context, html
 
 
 class DashboardModal:
@@ -61,14 +59,14 @@ class DashboardModal:
             prevent_initial_call=True,
         )
         def toggle_modal(
-            open,
+            dash_open,
             submit,
             dashboard_name,
             is_open,
         ):
             changed_id = [p["prop_id"] for p in callback_context.triggered][0]
             # If the widget is not opened but the open button was pressed, open the widget modal
-            if open and not is_open:
+            if dash_open and not is_open:
                 # Updates the dashboard list in case user has added new dashboards
                 return (
                     not is_open,
@@ -77,22 +75,20 @@ class DashboardModal:
                     False,
                 )
             # If submit was pressed, create a widget from the selected input
-            elif "dashboard-submit" in changed_id:
+            if "dashboard-submit" in changed_id:
                 # Get list of dashboards
                 dashboard_list = [
                     {"label": d.dashid, "value": d.parent_tab.tab_id}
                     for d in tabs.dashboards.values()
                 ]
-                for dict in dashboard_list:
-                    print(dict["label"])
-                    if dashboard_name == dict["label"]:
+                for name in dashboard_list:
+                    if dashboard_name == name["label"]:
                         return (
                             is_open,
                             dash.no_update,
                             dash.no_update,
                             True,
                         )
-                print("added: ", dashboard_name)
                 return not is_open, self.tabs.new_tab(dashboard_name), self.tabs.tabs.children, False,
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
             return (
