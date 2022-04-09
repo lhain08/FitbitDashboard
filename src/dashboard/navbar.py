@@ -21,17 +21,5 @@ class Navbar:
             dark=True,
         )
 
-        # @app.callback(
-        #     [
-        #         Output(self.tabs.my_id, "active_tab"),
-        #         Output(self.tabs.my_id, "children"),
-        #     ],
-        #     Input("new-dashboard", "n_clicks"),
-        #     suppress_callback_exceptions=True,
-        #     prevent_initial_call=True,
-        # )
-        # def create_new_dashboard(clicks):
-        #     return self.tabs.new_tab(), self.tabs.tabs.children
-
     def render(self):
         return self.navbar
