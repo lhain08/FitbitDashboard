@@ -14,10 +14,10 @@ class AppBuilder:
         self.data_manager = data_manager
         self.tabs = DashboardTabs(self.app)
         self.dashmodal = DashboardModal(
-            "dashmodal", 
-            Input("new-dashboard", "n_clicks"), 
-            self.tabs, 
-            self.app, 
+            "dashmodal",
+            Input("new-dashboard", "n_clicks"),
+            self.tabs,
+            self.app,
             self.data_manager,
         )
 
