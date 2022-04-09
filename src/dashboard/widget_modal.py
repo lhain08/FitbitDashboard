@@ -93,13 +93,16 @@ class WidgetModal:
                                 max_date_allowed=date(2027, 4, 27),
                                 initial_visible_month=date(2022, 4, 4),
                             ),
-                            dbc.ButtonGroup([
-                                dbc.Button("Past Year", id='past-year'),
-                                dbc.Button("Year to Date", id='ytd'),
-                                dbc.Button("Past Month", id='past-month'),
-                                dbc.Button("Month to Date", id='mtd'),
-                                dbc.Button("Today", id='today')
-                            ], size='sm'),
+                            dbc.ButtonGroup(
+                                [
+                                    dbc.Button("Past Year", id="past-year"),
+                                    dbc.Button("Year to Date", id="ytd"),
+                                    dbc.Button("Past Month", id="past-month"),
+                                    dbc.Button("Month to Date", id="mtd"),
+                                    dbc.Button("Today", id="today"),
+                                ],
+                                size="sm",
+                            ),
                             html.Br(),
                             html.Br(),
                             dbc.Label(
@@ -230,20 +233,22 @@ class WidgetModal:
                 Input("ytd", "n_clicks"),
                 Input("past-month", "n_clicks"),
                 Input("mtd", "n_clicks"),
-                Input("today", "n_clicks")
-            ]
+                Input("today", "n_clicks"),
+            ],
         )
         def date_pick(pastYear, ytd, pastMonth, mtd, today):
             changed_id = [p["prop_id"] for p in callback_context.triggered][0]
             td = datetime.date.today()
             if "past-year" in changed_id:
-                return (td - datetime.timedelta(days=365)).strftime("%Y-%m-%d"),\
-                       td.strftime("%Y-%m-%d")
+                return (td - datetime.timedelta(days=365)).strftime(
+                    "%Y-%m-%d"
+                ), td.strftime("%Y-%m-%d")
             if "ytd" in changed_id:
                 return f"{td.year}-01-01", td.strftime("%Y-%m-%d")
             if "past-month" in changed_id:
-                return (td - datetime.timedelta(days=30)).strftime("%Y-%m-%d"),\
-                       td.strftime("%Y-%m-%d")
+                return (td - datetime.timedelta(days=30)).strftime(
+                    "%Y-%m-%d"
+                ), td.strftime("%Y-%m-%d")
             if "mtd" in changed_id:
                 return f"{td.year}-{td.month}-01", td.strftime("%Y-%m-%d")
             if "today" in changed_id:
