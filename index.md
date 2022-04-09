@@ -1,8 +1,6 @@
-## Welcome to GitHub Pages
+## Welcome to Fitbit Dashboard
 
-You can use the [editor on GitHub](https://github.com/lhain08/FitbitDashboard/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Fitbit Dashboard is a web app designed to allow users to connect with their fitbit account and access their data in ways that Fitbit does not provide!
 
 ### Markdown
 
