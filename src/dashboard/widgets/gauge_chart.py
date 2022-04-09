@@ -22,7 +22,7 @@ class GaugeChartWidget(WidgetInterface):
         if self.goal == 0:
             fig = go.Figure(
                 data=go.Indicator(
-                    mode="gauge+number+delta",
+                    mode="gauge+number",
                     value=value,
                     title={"text": str(self.data_type)},
                     gauge_bar_thickness=0.8,
