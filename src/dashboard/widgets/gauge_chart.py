@@ -14,26 +14,20 @@ class GaugeChartWidget(WidgetInterface):
         data = self.data_manager.get_data(
             self.data_type, self.start_date, self.end_date
         )
-        # data[self.data_type]
-        # data["Time"]
+
+        value = sum([d for d in data[self.data_type]])
+        max_x = max((value, self.goal))
 
         # Create the chart
         if self.goal == 0:
             fig = go.Figure(
                 data=go.Indicator(
                     mode="gauge+number+delta",
-                    value=150,
-                    domain={"x": [0, 1], "y": [0, 1]},
-                    delta={"reference": 50},
+                    value=value,
                     title={"text": str(self.data_type)},
                     gauge_bar_thickness=0.8,
                     gauge={
-                        "axis": {"range": [None, 300]},
-                        "threshold": {
-                            "line": {"color": "red", "width": 4},
-                            "thickness": 0.75,
-                            "value": 250,
-                        },
+                        "axis": {"range": [None, max_x * 1.2]},
                     },
                 )
             )
@@ -42,13 +36,12 @@ class GaugeChartWidget(WidgetInterface):
             fig = go.Figure(
                 data=go.Indicator(
                     mode="gauge+number+delta",
-                    value=0,
-                    domain={"x": [0, 1], "y": [0, 1]},
-                    delta={"reference": 0},
+                    value=value,
+                    delta={"reference": self.goal},
                     title={"text": str(self.data_type)},
                     gauge_bar_thickness=0.8,
                     gauge={
-                        "axis": {"range": [None, self.goal + 50]},
+                        "axis": {"range": [None, max_x * 1.2]},
                         "threshold": {
                             "line": {"color": "red", "width": 4},
                             "thickness": 0.75,
