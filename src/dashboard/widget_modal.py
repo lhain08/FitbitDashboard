@@ -62,7 +62,7 @@ class WidgetModal:
                                 style={"color": "black"},
                                 options=list(self.chart_types.keys()),
                                 value=list(self.chart_types.keys())[0],
-                                id="chart-type"
+                                id="chart-type",
                             ),
                             html.Br(),
                             dbc.Label(
