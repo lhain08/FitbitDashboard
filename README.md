@@ -6,6 +6,7 @@
 Web app for creating customizable dashboards with Fitbit data
 
 ## Contributing to Fitbit Dashboard
+Join our Community! Use [this link](https://discord.gg/5qYpnkN3uJ) to join our discord server and talk about the project, post feedback, and even become a developer!
 
 ### Github
 Github is used to host all code, track issues and accept pull requests. Users can use github to submit pull requests of their code to be examined by the team and implemented if it helps the project. Users can also submit bugs ans issues on github to tell the team what they would like to see fixed.
