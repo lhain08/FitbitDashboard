@@ -6,6 +6,8 @@
 Web app for creating customizable dashboards with Fitbit data
 
 ## Contributing to Fitbit Dashboard
+
+### Discord
 Join our Community! Use [this link](https://discord.gg/5qYpnkN3uJ) to join our discord server and talk about the project, post feedback, and even become a developer!
 
 ### Github
