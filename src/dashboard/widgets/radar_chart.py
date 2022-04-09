@@ -45,6 +45,7 @@ class RadarChartWidget(WidgetInterface):
                 radialaxis=dict(visible=True),
             ),
             showlegend=False,
+            margin=dict(l=200, t=100, b=50),
         )
 
         fig.update_layout(title="Goal Progress")

@@ -58,6 +58,8 @@ class GaugeChartWidget(WidgetInterface):
                 )
             )
 
+        fig.update_layout(margin=dict(t=70, b=70))
+
         return html.Div(
             style={"width": "50%", "padding": "1.5em", "display": "inline-block"},
             children=[
