@@ -7,7 +7,9 @@ from .widget_interface import WidgetInterface
 
 
 class ScatterPlotWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name, goal, trends):
+    def __init__(
+        self, data_manager, data_type, start_date, end_date, name, goal, trends
+    ):
         super().__init__(data_manager, data_type, start_date, end_date, name, goal)
         self.trends = trends
 
@@ -18,19 +20,29 @@ class ScatterPlotWidget(WidgetInterface):
         )
         y = data[self.data_type]
         if self.intraday:
-            x = [datetime.datetime.strptime(d, "%H:%M:%S") for d in data['Time']]
+            x = [datetime.datetime.strptime(d, "%H:%M:%S") for d in data["Time"]]
         else:
-            x = [datetime.datetime.strptime(d, "%Y-%m-%d") for d in data['Time']]
+            x = [datetime.datetime.strptime(d, "%Y-%m-%d") for d in data["Time"]]
 
         # Create the chart
         if self.trends is None:
             fig = px.scatter(x=x, y=y)
-        elif self.trends == 'Linear':
-            fig = px.scatter(x=x, y=y, trendline="ols", trendline_scope="overall",
-                             trendline_color_override='red')
-        elif self.trends == 'Rolling Average':
-            fig = px.scatter(x=x, y=y, trendline='rolling', trendline_options={'window':int(len(x)/8)},
-                             trendline_color_override='red')
+        elif self.trends == "Linear":
+            fig = px.scatter(
+                x=x,
+                y=y,
+                trendline="ols",
+                trendline_scope="overall",
+                trendline_color_override="red",
+            )
+        elif self.trends == "Rolling Average":
+            fig = px.scatter(
+                x=x,
+                y=y,
+                trendline="rolling",
+                trendline_options={"window": int(len(x) / 8)},
+                trendline_color_override="red",
+            )
 
         fig.update_layout(title=str(self.data_type) + " Progress")
         fig.update_xaxes(title_text="Time")
