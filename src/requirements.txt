@@ -8,3 +8,5 @@ gunicorn==20.1.0
 cherrypy==18.6.1
 werkzeug==2.0.0
 dash_bootstrap_templates==1.0.5
+pandas==1.4.2
+statsmodels==0.13.1

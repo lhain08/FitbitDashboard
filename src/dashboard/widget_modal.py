@@ -131,6 +131,11 @@ class WidgetModal:
                                 value=0,
                                 updatemode="drag",
                             ),
+                            html.Br(),
+                            dbc.Label("Select A Trendline (Only allowed for Bar, Line, and Scatter Charts)",
+                                      html_for="trendline"),
+                            dcc.RadioItems(['Rolling Average', 'Linear', 'None'], 'None', inline=True,
+                                           id='trendline'),
                         ]
                     )
                 ),
@@ -148,6 +153,7 @@ class WidgetModal:
                 Output("dashboard-selection", "options"),
                 Output("content-wrapper", "children"),
                 Output("alert-auto", "is_open"),
+                Output("trendline", "value")
             ],
             [
                 trigger,
@@ -159,6 +165,7 @@ class WidgetModal:
                 Input("time-period", "end_date"),
                 Input("widget-name", "value"),
                 Input("goal-set", "value"),
+                Input("trendline", "value"),
             ],
             State("modal", "is_open"),
             suppress_callback_exceptions=True,
@@ -174,9 +181,16 @@ class WidgetModal:
             end_date,
             widget_name,
             goal,
+            trends,
             is_open,
         ):
+            if trends == 'None':
+                trends = None
             changed_id = [p["prop_id"] for p in callback_context.triggered][0]
+            # If the user has selected a chart or trend, verify that these are a valid pair
+            if ("chart-type" in changed_id or "trendline" in changed_id) and trends is not None and \
+                chart_type not in ['Line Chart', 'Bar Chart', 'Scatter Plot']:
+                return dash.no_update, dash.no_update, dash.no_update, dash.no_update, "None"
             # If the widget is not opened but the open button was pressed, open the widget modal
             if widget_open and not is_open:
                 # Updates the dashboard list in case user has added new dashboards
@@ -186,32 +200,44 @@ class WidgetModal:
                         {"label": d.dashid, "value": d.parent_tab.tab_id}
                         for d in self.tabs.dashboards.values()
                     ],
-                    dash.no_update,
-                    False,
+                    dash.no_update, False, dash.no_update
                 )
             # If submit was pressed, create a widget from the selected input
             if "submit" in changed_id:
-                if start_date is None or end_date is None or widget_name is None:
+                if start_date is None or end_date is None or widget_name is None \
+                        or (trends is not None and chart_type not in ['Line Chart', 'Bar Chart', 'Scatter Plot']):
                     return (
                         is_open,
                         [
                             {"label": d.dashid, "value": d.parent_tab.tab_id}
                             for d in self.tabs.dashboards.values()
                         ],
-                        dash.no_update,
-                        True,
+                        dash.no_update, True, dash.no_update
                     )
-                tabs.dashboards[dashboard].widgets.append(
-                    self.chart_types[chart_type](
-                        self.data_manager,
-                        data_type,
-                        start_date,
-                        end_date,
-                        widget_name,
-                        goal,
+                if trends:
+                    tabs.dashboards[dashboard].widgets.append(
+                        self.chart_types[chart_type](
+                            self.data_manager,
+                            data_type,
+                            start_date,
+                            end_date,
+                            widget_name,
+                            goal,
+                            trends
+                        )
                     )
-                )
-                return not is_open, dash.no_update, tabs.render_content(), False
+                else:
+                    tabs.dashboards[dashboard].widgets.append(
+                        self.chart_types[chart_type](
+                            self.data_manager,
+                            data_type,
+                            start_date,
+                            end_date,
+                            widget_name,
+                            goal,
+                        )
+                    )
+                return not is_open, dash.no_update, tabs.render_content(), False, dash.no_update
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
             return (
                 is_open,
@@ -219,8 +245,7 @@ class WidgetModal:
                     {"label": d.dashid, "value": d.parent_tab.tab_id}
                     for d in self.tabs.dashboards.values()
                 ],
-                dash.no_update,
-                False,
+                dash.no_update, False, dash.no_update
             )
 
         @app.callback(
@@ -250,7 +275,7 @@ class WidgetModal:
                     "%Y-%m-%d"
                 ), td.strftime("%Y-%m-%d")
             if "mtd" in changed_id:
-                return f"{td.year}-{td.month}-01", td.strftime("%Y-%m-%d")
+                return f"{td.year}-{td.month:02d}-01", td.strftime("%Y-%m-%d")
             if "today" in changed_id:
                 return td.strftime("%Y-%m-%d"), td.strftime("%Y-%m-%d")
             return dash.no_update, dash.no_update
