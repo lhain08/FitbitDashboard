@@ -15,6 +15,7 @@ class TestBarChartWidget:
             "2022-04-04",
             "Test Bar Chart",
             0,
+            None,
         )
 
         self.mock_data_manager.get_data.return_value = {

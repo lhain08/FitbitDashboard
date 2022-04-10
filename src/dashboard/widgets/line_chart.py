@@ -1,13 +1,17 @@
 import dash_bootstrap_components as dbc
-import plotly.graph_objects as go
+import plotly.express as px
 from dash import dcc, html
+import datetime
 
 from .widget_interface import WidgetInterface
 
 
 class LineChartWidget(WidgetInterface):
-    def __init__(self, data_manager, data_type, start_date, end_date, name, goal):
+    def __init__(
+        self, data_manager, data_type, start_date, end_date, name, goal, trends
+    ):
         super().__init__(data_manager, data_type, start_date, end_date, name, goal)
+        self.trends = trends
 
     def render(self):
         # Get the data first
@@ -15,11 +19,32 @@ class LineChartWidget(WidgetInterface):
             self.data_type, self.start_date, self.end_date
         )
         y = data[self.data_type]
-        x = data["Time"]
+        if self.intraday:
+            x = [datetime.datetime.strptime(d, "%H:%M:%S") for d in data["Time"]]
+        else:
+            x = [datetime.datetime.strptime(d, "%Y-%m-%d") for d in data["Time"]]
 
         # Create the chart
-        fig = go.Figure(data=go.Scatter(x=x, y=y))
+        if self.trends is None:
+            fig = px.scatter(x=x, y=y)
+        elif self.trends == "Linear":
+            fig = px.scatter(
+                x=x,
+                y=y,
+                trendline="ols",
+                trendline_scope="overall",
+                trendline_color_override="red",
+            )
+        elif self.trends == "Rolling Average":
+            fig = px.scatter(
+                x=x,
+                y=y,
+                trendline="rolling",
+                trendline_options={"window": int(len(x) / 8)},
+                trendline_color_override="red",
+            )
 
+        fig.update_traces(mode="lines")
         fig.update_layout(title=str(self.data_type) + " Progress")
         fig.update_xaxes(title_text="Time")
         fig.update_yaxes(title_text=str(self.data_type))
