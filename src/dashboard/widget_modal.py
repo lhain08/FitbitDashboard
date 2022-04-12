@@ -53,7 +53,6 @@ class WidgetModal:
                             dcc.Dropdown(
                                 style={"color": "black"},
                                 options=dashboard_list,
-                                value=dashboard_list[0]["value"],
                                 id="dashboard-selection",
                             ),
                             html.Br(),
@@ -222,7 +221,8 @@ class WidgetModal:
             # If submit was pressed, create a widget from the selected input
             if "submit" in changed_id:
                 if (
-                    start_date is None
+                    dashboard is None
+                    or start_date is None
                     or end_date is None
                     or widget_name is None
                     or (
@@ -241,7 +241,7 @@ class WidgetModal:
                         True,
                         dash.no_update,
                     )
-                if trends:
+                if chart_type in ["Line Chart", "Bar Chart", "Scatter Plot"]:
                     tabs.dashboards[dashboard].widgets.append(
                         self.chart_types[chart_type](
                             self.data_manager,
