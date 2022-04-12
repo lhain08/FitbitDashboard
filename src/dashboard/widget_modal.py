@@ -266,11 +266,6 @@ class WidgetModal:
                         dash.no_update,
                     )
                 if chart_type in ["Line Chart", "Bar Chart", "Scatter Plot"]:
-                    if (
-                        len(self.data_manager.get_device()) == 0
-                        and data_type == "Elevation"
-                        or data_type == "Floors"
-                    ):
                     tabs.dashboards[dashboard].widgets.append(
                         self.chart_types[chart_type](
                             self.data_manager,
@@ -283,14 +278,6 @@ class WidgetModal:
                         )
                     )
                 else:
-                        return (
-                            is_open,
-                            dash.no_update,
-                            dash.no_update,
-                            False,
-                            True,
-                            dash.no_update,
-                        )
                     tabs.dashboards[dashboard].widgets.append(
                         self.chart_types[chart_type](
                             self.data_manager,
