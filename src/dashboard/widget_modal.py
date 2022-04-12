@@ -63,8 +63,7 @@ class WidgetModal:
                                 id="dashboard-selection",
                             ),
                             html.Br(),
-                            dbc.Label("Select your chart type",
-                                      html_for="chart-type"),
+                            dbc.Label("Select your chart type", html_for="chart-type"),
                             html.Br(),
                             dcc.Dropdown(
                                 style={"color": "black"},
@@ -120,16 +119,14 @@ class WidgetModal:
                                 id="widget-name", placeholder="widget A", type="text"
                             ),
                             html.Br(),
-                            dbc.Label("Set a goal (optional)",
-                                      html_for="goal-set"),
+                            dbc.Label("Set a goal (optional)", html_for="goal-set"),
                             html.Br(),
                             dcc.Slider(
                                 0,
                                 1000,
                                 1,
                                 id="goal-set",
-                                tooltip={"placement": "bottom",
-                                         "always_visible": True},
+                                tooltip={"placement": "bottom", "always_visible": True},
                                 marks={
                                     0: {"label": "0"},
                                     250: {"label": "250"},
@@ -155,8 +152,7 @@ class WidgetModal:
                     )
                 ),
                 dbc.ModalFooter(
-                    dbc.Button("Submit", id="submit",
-                               className="ms-auto", n_clicks=0)
+                    dbc.Button("Submit", id="submit", className="ms-auto", n_clicks=0)
                 ),
             ],
             id=self.my_id,
@@ -266,6 +262,19 @@ class WidgetModal:
                         dash.no_update,
                     )
                 if chart_type in ["Line Chart", "Bar Chart", "Scatter Plot"]:
+                    if (
+                        len(self.data_manager.get_device()) == 0
+                        and data_type == "Elevation"
+                        or data_type == "Floors"
+                    ):
+                        return (
+                            is_open,
+                            dash.no_update,
+                            dash.no_update,
+                            False,
+                            True,
+                            dash.no_update,
+                        )
                     tabs.dashboards[dashboard].widgets.append(
                         self.chart_types[chart_type](
                             self.data_manager,
@@ -278,8 +287,7 @@ class WidgetModal:
                         )
                     )
                 else:
-                    if len(self.data_manager.get_device()) == 0 and data_type == 'Elevation' or data_type == 'Floors':
-                        return(
+                        return (
                             is_open,
                             dash.no_update,
                             dash.no_update,
