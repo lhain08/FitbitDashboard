@@ -252,8 +252,12 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
-                if len(self.data_manager.get_device()) == 0 and data_type == 'Elevation' or data_type == 'Floors':
-                    return(
+                if (
+                    len(self.data_manager.get_device()) == 0
+                    and data_type == "Elevation"
+                    or data_type == "Floors"
+                ):
+                    return (
                         is_open,
                         dash.no_update,
                         dash.no_update,
@@ -267,14 +271,6 @@ class WidgetModal:
                         and data_type == "Elevation"
                         or data_type == "Floors"
                     ):
-                        return (
-                            is_open,
-                            dash.no_update,
-                            dash.no_update,
-                            False,
-                            True,
-                            dash.no_update,
-                        )
                     tabs.dashboards[dashboard].widgets.append(
                         self.chart_types[chart_type](
                             self.data_manager,
