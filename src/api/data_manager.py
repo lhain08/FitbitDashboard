@@ -15,7 +15,8 @@ class DataManager:
         self.client = client
         if self.client is None:
             self.client = connect.get_client()
-
+    def get_device(self):
+        return self.client.get_devices()
     def get_data(self, data_type, start_date, end_date):
         """
         get_data - used for getting all types of data from one function
@@ -214,6 +215,7 @@ class DataManager:
         # Check if descriptor is date format
         r = re.compile(r"\d{4}-\d{2}-\d{2}")
         if r.match(descriptor):
+            
             fit_statsHR = self.client.time_series(
                 "activities/elevation", base_date=start_date, end_date=descriptor
             )
