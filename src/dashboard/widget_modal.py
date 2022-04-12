@@ -1,6 +1,8 @@
 import datetime
 from datetime import date
 
+import pandas as pd
+
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback_context, dcc, html
@@ -46,6 +48,13 @@ class WidgetModal:
                 dbc.Alert(
                     "Your device cannot read elevation. Please select a different data type",
                     id="alert-data-type",
+                    is_open=False,
+                    duration=4000,
+                    color="danger",
+                ),
+                dbc.Alert(
+                    "Invalid date selected",
+                    id="alert-date",
                     is_open=False,
                     duration=4000,
                     color="danger",
@@ -166,6 +175,7 @@ class WidgetModal:
                 Output("content-wrapper", "children"),
                 Output("alert-auto", "is_open"),
                 Output("alert-data-type", "is_open"),
+                Output("alert-date", "is_open"),
                 Output("trendline", "value"),
             ],
             [
@@ -212,6 +222,7 @@ class WidgetModal:
                     dash.no_update,
                     dash.no_update,
                     dash.no_update,
+                    dash.no_update,
                     "None",
                 )
             # If the widget is not opened but the open button was pressed, open the widget modal
@@ -224,6 +235,7 @@ class WidgetModal:
                         for d in self.tabs.dashboards.values()
                     ],
                     dash.no_update,
+                    False,
                     False,
                     False,
                     dash.no_update,
@@ -250,6 +262,7 @@ class WidgetModal:
                         dash.no_update,
                         True,
                         False,
+                        False,
                         dash.no_update,
                     )
                 if (
@@ -261,6 +274,24 @@ class WidgetModal:
                         is_open,
                         dash.no_update,
                         dash.no_update,
+                        False,
+                        True,
+                        False,
+                        dash.no_update,
+                    )
+                if (
+                    date.today() < pd.to_datetime(start_date).date()
+                    or date.today() < pd.to_datetime(end_date).date()
+                    or pd.to_datetime(start_date).date()
+                    < pd.to_datetime("2009-01-01").date()
+                    or pd.to_datetime(end_date).date()
+                    < pd.to_datetime("2009-01-01").date()
+                ):
+                    return (
+                        is_open,
+                        dash.no_update,
+                        dash.no_update,
+                        False,
                         False,
                         True,
                         dash.no_update,
@@ -294,6 +325,7 @@ class WidgetModal:
                     tabs.render_content(),
                     False,
                     False,
+                    False,
                     dash.no_update,
                 )
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
@@ -304,6 +336,7 @@ class WidgetModal:
                     for d in self.tabs.dashboards.values()
                 ],
                 dash.no_update,
+                False,
                 False,
                 False,
                 dash.no_update,
