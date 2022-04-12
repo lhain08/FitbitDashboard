@@ -41,9 +41,6 @@ class DashboardTabs:
         self.content_id = "content"
         self.active_tab = None
 
-        # Create first tab
-        self.new_tab("Dashboard 1")
-
         @app.callback(
             Output("content", "children"),
             Input("tabs", "active_tab"),

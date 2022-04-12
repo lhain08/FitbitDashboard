@@ -44,7 +44,7 @@ class DashboardModal:
                 ),
             ],
             id=self.my_id,
-            is_open=False,
+            is_open=True,
         )
 
         @app.callback(
