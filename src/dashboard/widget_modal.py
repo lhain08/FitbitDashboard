@@ -94,6 +94,7 @@ class WidgetModal:
                                     "Calories",
                                     "Elevation",
                                     "Floors",
+                                    "Weight",
                                 ],
                                 value="Steps",
                                 id="datatype-selection",
