@@ -1,7 +1,6 @@
 import datetime
 from datetime import date
 
-import pandas as pd
 
 import dash
 import dash_bootstrap_components as dbc
@@ -53,7 +52,9 @@ class WidgetModal:
                     color="danger",
                 ),
                 dbc.Alert(
-                    "Invalid date selected",
+                    "Invalid date selected. Please select a date between 01/01/2009-"
+                    + date.today().strftime("%m/%d/%Y")
+                    + " and a start and end date within three years of each other",
                     id="alert-date",
                     is_open=False,
                     duration=4000,
@@ -279,13 +280,26 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
+                print(start_date)
+                print(datetime.datetime.strptime(start_date, "%Y-%m-%d"))
                 if (
-                    date.today() < pd.to_datetime(start_date).date()
-                    or date.today() < pd.to_datetime(end_date).date()
-                    or pd.to_datetime(start_date).date()
-                    < pd.to_datetime("2009-01-01").date()
-                    or pd.to_datetime(end_date).date()
-                    < pd.to_datetime("2009-01-01").date()
+                    date.today()
+                    < datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    or date.today()
+                    < datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    < datetime.datetime.strptime("2009-01-01", "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    < datetime.datetime.strptime("2009-01-01", "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    > datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    or abs(
+                        (
+                            datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                            - datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                        ).days
+                    )
+                    > 1095
                 ):
                     return (
                         is_open,
