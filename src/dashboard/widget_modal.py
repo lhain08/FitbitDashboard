@@ -280,8 +280,7 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
-                print(start_date)
-                print(datetime.datetime.strptime(start_date, "%Y-%m-%d"))
+
                 if (
                     date.today()
                     < datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
