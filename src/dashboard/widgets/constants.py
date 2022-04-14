@@ -7,4 +7,5 @@ class Constants:
         "Calories": "Calories",
         "Floors": "Floors",
         "Elevation": "Feet",
+        "Weight": "Pounds",
     }

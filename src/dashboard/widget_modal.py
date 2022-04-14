@@ -1,6 +1,7 @@
 import datetime
 from datetime import date
 
+
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback_context, dcc, html
@@ -50,6 +51,15 @@ class WidgetModal:
                     duration=4000,
                     color="danger",
                 ),
+                dbc.Alert(
+                    "Invalid date selected. Please select a date between 01/01/2009-"
+                    + date.today().strftime("%m/%d/%Y")
+                    + " and a start and end date within three years of each other",
+                    id="alert-date",
+                    is_open=False,
+                    duration=4000,
+                    color="danger",
+                ),
                 dbc.ModalHeader(dbc.ModalTitle("Create A Widget")),
                 dbc.ModalBody(
                     html.Div(
@@ -84,6 +94,7 @@ class WidgetModal:
                                     "Calories",
                                     "Elevation",
                                     "Floors",
+                                    "Weight",
                                 ],
                                 value="Steps",
                                 id="datatype-selection",
@@ -166,6 +177,7 @@ class WidgetModal:
                 Output("content-wrapper", "children"),
                 Output("alert-auto", "is_open"),
                 Output("alert-data-type", "is_open"),
+                Output("alert-date", "is_open"),
                 Output("trendline", "value"),
             ],
             [
@@ -212,6 +224,7 @@ class WidgetModal:
                     dash.no_update,
                     dash.no_update,
                     dash.no_update,
+                    dash.no_update,
                     "None",
                 )
             # If the widget is not opened but the open button was pressed, open the widget modal
@@ -224,6 +237,7 @@ class WidgetModal:
                         for d in self.tabs.dashboards.values()
                     ],
                     dash.no_update,
+                    False,
                     False,
                     False,
                     dash.no_update,
@@ -250,6 +264,7 @@ class WidgetModal:
                         dash.no_update,
                         True,
                         False,
+                        False,
                         dash.no_update,
                     )
                 if (
@@ -261,6 +276,36 @@ class WidgetModal:
                         is_open,
                         dash.no_update,
                         dash.no_update,
+                        False,
+                        True,
+                        False,
+                        dash.no_update,
+                    )
+
+                if (
+                    date.today()
+                    < datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    or date.today()
+                    < datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    < datetime.datetime.strptime("2009-01-01", "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    < datetime.datetime.strptime("2009-01-01", "%Y-%m-%d").date()
+                    or datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                    > datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                    or abs(
+                        (
+                            datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                            - datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                        ).days
+                    )
+                    > 1095
+                ):
+                    return (
+                        is_open,
+                        dash.no_update,
+                        dash.no_update,
+                        False,
                         False,
                         True,
                         dash.no_update,
@@ -294,6 +339,7 @@ class WidgetModal:
                     tabs.render_content(),
                     False,
                     False,
+                    False,
                     dash.no_update,
                 )
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
@@ -304,6 +350,7 @@ class WidgetModal:
                     for d in self.tabs.dashboards.values()
                 ],
                 dash.no_update,
+                False,
                 False,
                 False,
                 dash.no_update,

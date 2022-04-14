@@ -28,7 +28,7 @@ class RadarChartWidget(WidgetInterface):
         }
         for i in range(len(data[self.data_type])):
             d = datetime.strptime(data["Time"][i], "%Y-%m-%d").strftime("%A")
-            days[d][0] += data[self.data_type][i]
+            days[d][0] += float(data[self.data_type][i])
             days[d][1] += 1
 
         r = []

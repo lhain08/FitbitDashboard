@@ -64,10 +64,10 @@ class StatsCardWidget(WidgetInterface):
                 ]
             )
         else:
-            total = sum(values)
+            total = sum(float(x) for x in values)
             avg = total / len(values)
             max_index = max(range(len(values)), key=values.__getitem__)
-            max_value = values[max_index]
+            max_value = float(values[max_index])
             max_date = datetime.strptime(dateTimes[max_index], "%Y-%m-%d")
 
             # Generate the card body

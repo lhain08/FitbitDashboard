@@ -15,7 +15,7 @@ class GaugeChartWidget(WidgetInterface):
             self.data_type, self.start_date, self.end_date
         )
 
-        value = sum([d for d in data[self.data_type]])
+        value = sum([float(d) for d in data[self.data_type]])
         max_x = max((value, self.goal))
 
         # Create the chart
