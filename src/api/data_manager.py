@@ -400,7 +400,7 @@ class DataManager:
         time_list = []
         val_list = []
         for i in fit_statsHR["body-weight"]:
-            val_list.append(i["value"])
+            val_list.append(float(i["value"]))
             time_list.append(i["dateTime"])
         heartdf = {"Weight": val_list, "Time": time_list}
 
