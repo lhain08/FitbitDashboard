@@ -13,3 +13,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./src:/usr/src
+      - /etc/localtime:/etc/localtime
