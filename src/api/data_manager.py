@@ -316,14 +316,16 @@ class DataManager:
         time_list = []
         val_list = []
 
-        while start != end:
-            fit_statsHR = self.client.get_sleep(start)
-
-            for i in fit_statsHR["sleep"][0]["minuteData"]:
-                val_list.append(float(i["value"]))
-                time_list.append(i["dateTime"])
-
-            start = start + dt.timedelta(days=1)
+        fit_statsHR = self.client.time_series("sleep", base_date=start, end_date=end)
+        if len(fit_statsHR["sleep"]) > 0:
+            for i in fit_statsHR["sleep"]:
+                val_list.append(float(i["minutesAsleep"]))
+                time_list.append(str(dt.datetime.strptime(i["startTime"], "%Y-%m-%d")))
+        else:
+            while start != end:
+                val_list.append(0.0)
+                time_list.append(str(dt.datetime.strftime(start, "%Y-%m-%d")))
+                start = start + dt.timedelta(days=1)
 
         sleepdf = {"Sleep": val_list, "Time": time_list}
 

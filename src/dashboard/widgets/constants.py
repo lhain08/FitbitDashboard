@@ -8,4 +8,5 @@ class Constants:
         "Floors": "Floors",
         "Elevation": "Feet",
         "Weight": "Pounds",
+        "Sleep": "Minutes",
     }
