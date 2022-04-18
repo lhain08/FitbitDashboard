@@ -324,13 +324,16 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
-                if(data_type=="Sleep" and abs(
+                if (
+                    data_type == "Sleep"
+                    and abs(
                         (
                             datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
                             - datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
                         ).days
                     )
-                    > 100):
+                    > 100
+                ):
                     return (
                         is_open,
                         dash.no_update,
