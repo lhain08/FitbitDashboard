@@ -2,6 +2,9 @@ import dash_bootstrap_components as dbc
 from dash import html
 from dash import Input, Output, State
 
+FD_LOGO = "https://i.imgur.com/VS5lX0f.png"
+
+
 class Navbar:
     def __init__(self, app, tabs, modal, dashmodal, navid="navbar"):
         self.navid = navid
@@ -15,8 +18,12 @@ class Navbar:
                         dbc.Row(
                             [
                                 # Our logo goes here
-                                # dbc.Col(html.Img(src=PLOTLY_LOGO, height="30px")),
-                                dbc.Col(dbc.NavbarBrand("Fitbit Dashboard", className="ms-2")),
+                                dbc.Col(html.Img(src=FD_LOGO, height="30px")),
+                                dbc.Col(
+                                    dbc.NavbarBrand(
+                                        "Fitbit Dashboard", className="ms-2"
+                                    )
+                                ),
                             ],
                             align="center",
                             className="g-0",
@@ -28,13 +35,21 @@ class Navbar:
                     dbc.Collapse(
                         dbc.Row(
                             [
-                                dbc.Col(dbc.Button("New Widget", id="new-widget", n_clicks=0)),
-                                dbc.Col(dbc.Button("New Dashboard", id="new-dashboard", n_clicks=0)),
+                                dbc.Col(
+                                    dbc.Button(
+                                        "New Widget", id="new-widget", n_clicks=0
+                                    )
+                                ),
+                                dbc.Col(
+                                    dbc.Button(
+                                        "New Dashboard", id="new-dashboard", n_clicks=0
+                                    )
+                                ),
                                 modal.render(),
                                 dashmodal.render(),
                             ],
                             className="g-0 ms-auto flex-nowrap mt-3 mt-md-0",
-                            align="center"
+                            align="center",
                         ),
                         id="navbar-collapse",
                         is_open=False,

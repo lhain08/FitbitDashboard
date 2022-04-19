@@ -56,9 +56,11 @@ class GaugeChartWidget(WidgetInterface):
         return html.Div(
             style={"width": "50%", "padding": "1.5em", "display": "inline-block"},
             children=[
-                dbc.Card(children=[
-                    dbc.CardHeader(self.name),
-                    dbc.CardBody(dcc.Graph(figure=fig)),
-                ])
+                dbc.Card(
+                    children=[
+                        dbc.CardHeader(self.name),
+                        dbc.CardBody(dcc.Graph(figure=fig)),
+                    ]
+                )
             ],
         )
