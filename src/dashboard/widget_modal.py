@@ -185,10 +185,9 @@ class WidgetModal:
             Input("datatype-selection", "value"),
         )
         def disableTodayButton(data_type):
-            if data_type == "Sleep" or data_type == "Weight" or data_type == "Body Fat":
-                return True
-            else:
-                return False
+            return (
+                data_type == "Sleep" or data_type == "Weight" or data_type == "Body Fat"
+            )
 
         @app.callback(
             [
