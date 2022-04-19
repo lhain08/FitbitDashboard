@@ -2,6 +2,8 @@ import dash_bootstrap_components as dbc
 from dash import html
 from dash import Input, Output, State
 
+FD_LOGO = "https://i.imgur.com/VS5lX0f.png"
+
 class Navbar:
     def __init__(self, app, tabs, modal, dashmodal, navid="navbar"):
         self.navid = navid
@@ -15,7 +17,7 @@ class Navbar:
                         dbc.Row(
                             [
                                 # Our logo goes here
-                                # dbc.Col(html.Img(src=PLOTLY_LOGO, height="30px")),
+                                dbc.Col(html.Img(src=FD_LOGO, height="50px")),
                                 dbc.Col(dbc.NavbarBrand("Fitbit Dashboard", className="ms-2")),
                             ],
                             align="center",
