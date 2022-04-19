@@ -52,6 +52,13 @@ class WidgetModal:
                     color="danger",
                 ),
                 dbc.Alert(
+                    "The maximum interval for Sleep Widgets is 100 days. Please select dates within that range.",
+                    id="alert-sleep-date",
+                    is_open=False,
+                    duration=4000,
+                    color="danger",
+                ),
+                dbc.Alert(
                     "Invalid date selected. Please select a date between 01/01/2009-"
                     + date.today().strftime("%m/%d/%Y")
                     + " and a start and end date within three years of each other",
@@ -95,6 +102,7 @@ class WidgetModal:
                                     "Elevation",
                                     "Floors",
                                     "Weight",
+                                    "Sleep",
                                 ],
                                 value="Steps",
                                 id="datatype-selection",
@@ -178,6 +186,7 @@ class WidgetModal:
                 Output("alert-auto", "is_open"),
                 Output("alert-data-type", "is_open"),
                 Output("alert-date", "is_open"),
+                Output("alert-sleep-date", "is_open"),
                 Output("trendline", "value"),
             ],
             [
@@ -225,6 +234,7 @@ class WidgetModal:
                     dash.no_update,
                     dash.no_update,
                     dash.no_update,
+                    dash.no_update,
                     "None",
                 )
             # If the widget is not opened but the open button was pressed, open the widget modal
@@ -237,6 +247,7 @@ class WidgetModal:
                         for d in self.tabs.dashboards.values()
                     ],
                     dash.no_update,
+                    False,
                     False,
                     False,
                     False,
@@ -265,6 +276,7 @@ class WidgetModal:
                         True,
                         False,
                         False,
+                        False,
                         dash.no_update,
                     )
                 if (
@@ -278,6 +290,7 @@ class WidgetModal:
                         dash.no_update,
                         False,
                         True,
+                        False,
                         False,
                         dash.no_update,
                     )
@@ -305,6 +318,27 @@ class WidgetModal:
                         is_open,
                         dash.no_update,
                         dash.no_update,
+                        False,
+                        False,
+                        True,
+                        False,
+                        dash.no_update,
+                    )
+                if (
+                    data_type == "Sleep"
+                    and abs(
+                        (
+                            datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                            - datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+                        ).days
+                    )
+                    > 100
+                ):
+                    return (
+                        is_open,
+                        dash.no_update,
+                        dash.no_update,
+                        False,
                         False,
                         False,
                         True,
@@ -340,6 +374,7 @@ class WidgetModal:
                     False,
                     False,
                     False,
+                    False,
                     dash.no_update,
                 )
             # Essentially a no update, case where neither submit nor open was clicked, typically from callback being called on refresh of page
@@ -350,6 +385,7 @@ class WidgetModal:
                     for d in self.tabs.dashboards.values()
                 ],
                 dash.no_update,
+                False,
                 False,
                 False,
                 False,
