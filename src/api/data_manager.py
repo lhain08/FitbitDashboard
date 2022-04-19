@@ -46,7 +46,7 @@ class DataManager:
             method = self.get_heart_rate_data
         elif data_type == "Weight":
             method = self.get_weight_data
-        elif data_type == "Fat":
+        elif data_type == "Body Fat":
             method = self.get_fat_data
 
         if method == None:
@@ -111,7 +111,6 @@ class DataManager:
             fit_statsHR = self.client.intraday_time_series(
                 "activities/steps", base_date=start_date, detail_level=descriptor
             )
-
             time_list = []
             val_list = []
             for i in fit_statsHR["activities-steps-intraday"]["dataset"]:
@@ -420,7 +419,6 @@ class DataManager:
         fit_statsHR = self.client.time_series(
             "body/fat", base_date=start_date, end_date=end_date
         )
-
         time_list = []
         val_list = []
         for i in fit_statsHR["body-fat"]:

@@ -9,4 +9,5 @@ class Constants:
         "Elevation": "Feet",
         "Weight": "Pounds",
         "Sleep": "Minutes",
+        "Body Fat": "Body Fat Percentage",
     }
