@@ -48,12 +48,14 @@ class RadarChartWidget(WidgetInterface):
             margin=dict(l=200, t=100, b=50),
         )
 
-        fig.update_layout(title="Goal Progress")
+        fig.update_layout(title="Averages By Weekday")
 
         return html.Div(
             style={"width": "50%", "padding": "1.5em", "display": "inline-block"},
             children=[
-                dbc.Card("Widget: " + self.name, body=True),
-                dcc.Graph(figure=fig),
+                dbc.Card(children=[
+                    dbc.CardHeader(self.name),
+                    dbc.CardBody(dcc.Graph(figure=fig)),
+                ])
             ],
         )
