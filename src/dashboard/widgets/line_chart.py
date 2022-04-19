@@ -20,9 +20,11 @@ class LineChartWidget(WidgetInterface):
         )
         y = data[self.data_type]
         if self.intraday:
-            x = [datetime.datetime.strptime(d, "%H:%M:%S") for d in data["Time"]]
+            x = [datetime.datetime.strptime(d, "%H:%M:%S")
+                 for d in data["Time"]]
         else:
-            x = [datetime.datetime.strptime(d, "%Y-%m-%d") for d in data["Time"]]
+            x = [datetime.datetime.strptime(d, "%Y-%m-%d")
+                 for d in data["Time"]]
 
         # Create the chart
         if self.trends is None:
@@ -50,7 +52,8 @@ class LineChartWidget(WidgetInterface):
         fig.update_yaxes(title_text=str(self.data_type))
 
         return html.Div(
-            style={"width": "50%", "padding": "1.5em", "display": "inline-block"},
+            style={"width": "50%", "padding": "1.5em",
+                   "display": "inline-block"},
             children=[
                 dbc.Card(children=[
                     dbc.CardHeader(self.name),

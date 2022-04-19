@@ -316,11 +316,13 @@ class DataManager:
         time_list = []
         val_list = []
 
-        fit_statsHR = self.client.time_series("sleep", base_date=start, end_date=end)
+        fit_statsHR = self.client.time_series(
+            "sleep", base_date=start, end_date=end)
         if len(fit_statsHR["sleep"]) > 0:
             for i in fit_statsHR["sleep"]:
                 val_list.append(float(i["minutesAsleep"]))
-                time_list.append(str(dt.datetime.strptime(i["startTime"], "%Y-%m-%d")))
+                time_list.append(
+                    str(dt.datetime.strptime(i["startTime"], "%Y-%m-%d")))
         else:
             while start != end:
                 val_list.append(0.0)
@@ -342,7 +344,8 @@ class DataManager:
         fit_statsHR = self.client.get_sleep(date)
 
         del fit_statsHR["sleep"][0]["minuteData"]
-        sleepdf = {"sleep": fit_statsHR["sleep"][0], "summary": fit_statsHR["summary"]}
+        sleepdf = {"sleep": fit_statsHR["sleep"]
+                   [0], "summary": fit_statsHR["summary"]}
 
         return sleepdf
 

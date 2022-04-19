@@ -36,7 +36,8 @@ class StatsCardWidget(WidgetInterface):
             # Generate the card body
             body = html.Div(
                 [
-                    html.H3(f"Total {self.data_type}", style={"text-align": "center"}),
+                    html.H3(f"Total {self.data_type}",
+                            style={"text-align": "center"}),
                     html.H4(
                         f"{total:.3f}".rstrip("0").rstrip(".")
                         + f" {Constants.UNITS[self.data_type]}",
@@ -53,14 +54,16 @@ class StatsCardWidget(WidgetInterface):
                         style={"text-align": "center"},
                         id="average",
                     ),
-                    html.H3(f"Peak 15 Minute Interval", style={"text-align": "center"}),
+                    html.H3(f"Peak 15 Minute Interval",
+                            style={"text-align": "center"}),
                     html.H4(
                         f"{max_value:.3f}".rstrip("0").rstrip(".")
                         + f" {Constants.UNITS[self.data_type]}",
                         style={"text-align": "center"},
                         id="max-value",
                     ),
-                    html.H4(max_time, style={"text-align": "center"}, id="max-time"),
+                    html.H4(max_time, style={
+                            "text-align": "center"}, id="max-time"),
                 ]
             )
         else:
@@ -73,7 +76,8 @@ class StatsCardWidget(WidgetInterface):
             # Generate the card body
             body = html.Div(
                 [
-                    html.H3(f"Total {self.data_type}", style={"text-align": "center"}),
+                    html.H3(f"Total {self.data_type}",
+                            style={"text-align": "center"}),
                     html.H4(
                         f"{total:.3f}".rstrip("0").rstrip(".")
                         + f" {Constants.UNITS[self.data_type]}",

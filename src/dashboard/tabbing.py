@@ -102,6 +102,7 @@ class DashboardTabs:
         return html.Div(
             [
                 self.tabs,
-                html.Div(id="content-wrapper", children=[self.render_content()]),
+                html.Div(id="content-wrapper",
+                         children=[self.render_content()]),
             ]
         )

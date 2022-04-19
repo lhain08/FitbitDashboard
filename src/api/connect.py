@@ -39,7 +39,8 @@ def write_tokens(access, refresh, expires):
 
 def refresh_tokens(token):
     """Callback function for updating the token cache when tokens are expired"""
-    write_tokens(token["access_token"], token["refresh_token"], token["expires_at"])
+    write_tokens(token["access_token"],
+                 token["refresh_token"], token["expires_at"])
 
 
 def get_client():
@@ -66,7 +67,8 @@ def get_client():
             raise Exception("Authorization Failed")
         # Get tokens and client
         access_token = str(server.fitbit.client.session.token["access_token"])
-        refresh_token = str(server.fitbit.client.session.token["refresh_token"])
+        refresh_token = str(
+            server.fitbit.client.session.token["refresh_token"])
         expires_at = float(server.fitbit.client.session.token["expires_at"])
         write_tokens(access_token, refresh_token, expires_at)
 

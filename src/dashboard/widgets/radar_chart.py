@@ -51,7 +51,8 @@ class RadarChartWidget(WidgetInterface):
         fig.update_layout(title="Averages By Weekday")
 
         return html.Div(
-            style={"width": "50%", "padding": "1.5em", "display": "inline-block"},
+            style={"width": "50%", "padding": "1.5em",
+                   "display": "inline-block"},
             children=[
                 dbc.Card(children=[
                     dbc.CardHeader(self.name),
