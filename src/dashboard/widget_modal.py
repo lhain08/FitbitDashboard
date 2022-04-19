@@ -103,6 +103,7 @@ class WidgetModal:
                                     "Floors",
                                     "Weight",
                                     "Sleep",
+                                    "Body Fat",
                                 ],
                                 value="Steps",
                                 id="datatype-selection",
@@ -124,7 +125,7 @@ class WidgetModal:
                                     dbc.Button("Year to Date", id="ytd"),
                                     dbc.Button("Past Month", id="past-month"),
                                     dbc.Button("Month to Date", id="mtd"),
-                                    dbc.Button("Today", id="today"),
+                                    dbc.Button("Today", id="today", disabled=False),
                                 ],
                                 size="sm",
                             ),
@@ -177,6 +178,16 @@ class WidgetModal:
             id=self.my_id,
             is_open=False,
         )
+        # disables today button for certain data types
+
+        @app.callback(
+            Output("today", "disabled"),
+            Input("datatype-selection", "value"),
+        )
+        def disableTodayButton(data_type):
+            return (
+                data_type == "Sleep" or data_type == "Weight" or data_type == "Body Fat"
+            )
 
         @app.callback(
             [
@@ -237,6 +248,7 @@ class WidgetModal:
                     dash.no_update,
                     "None",
                 )
+
             # If the widget is not opened but the open button was pressed, open the widget modal
             if widget_open and not is_open:
                 # Updates the dashboard list in case user has added new dashboards
@@ -279,6 +291,7 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
+                # If no device has elevation ability
                 if (
                     len(self.data_manager.get_device()) == 0
                     and data_type == "Elevation"
@@ -294,7 +307,7 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
-
+                # If invalid date selected
                 if (
                     date.today()
                     < datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
@@ -324,6 +337,7 @@ class WidgetModal:
                         False,
                         dash.no_update,
                     )
+                # max 100 day interval for sleep
                 if (
                     data_type == "Sleep"
                     and abs(
